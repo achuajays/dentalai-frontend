@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Scan, Upload, FileImage, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea";
+import { SaveForLater } from "./SaveForLater";
 
 interface ScanAnalysisResponse {
   message: string;
@@ -187,6 +188,12 @@ export function MedicalImagingSection() {
                     value={analysisResult.metadata.analysis}
                     readOnly
                     className="w-full h-[400px] p-4 border-0 text-sm text-gray-700 font-sans whitespace-pre-wrap bg-gray-50"
+                  />
+                </div>
+                <div className="flex justify-end">
+                  <SaveForLater 
+                    text={analysisResult.metadata.analysis}
+                    type="Scan"
                   />
                 </div>
               </div>

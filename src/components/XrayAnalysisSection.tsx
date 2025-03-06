@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Radiation, Upload, FileImage, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { SaveForLater } from "./SaveForLater";
 
 interface XrayAnalysisResponse {
   filename: string;
@@ -174,6 +175,12 @@ export function XrayAnalysisSection() {
                   <pre className="text-sm whitespace-pre-wrap font-sans text-gray-700">
                     {formatAnalysis(analysisResult.analysis)}
                   </pre>
+                </div>
+                <div className="flex justify-end">
+                  <SaveForLater 
+                    text={analysisResult.analysis}
+                    type="Xray"
+                  />
                 </div>
               </div>
             </div>
