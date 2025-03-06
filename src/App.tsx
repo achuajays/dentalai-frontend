@@ -17,6 +17,7 @@ import AIImaging from "./pages/AIImaging";
 import AIReports from "./pages/AIReports";
 import AIExercise from "./pages/AIExercise";
 import Integration from "./pages/Integration";
+import About from "./pages/About";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/ai-reports" element={<AIReports />} />
           <Route path="/ai-exercise" element={<AIExercise />} />
           <Route path="/integrations" element={<Integration />} />
+          <Route path="/about" element={<About />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
