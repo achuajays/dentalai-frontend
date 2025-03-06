@@ -1,8 +1,11 @@
 
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { FileImage } from "lucide-react";
+import { FileImage, Save, Pencil } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { SaveForLater } from "@/components/SaveForLater";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 interface ScanAnalysisResponse {
   message: string;
@@ -20,6 +23,25 @@ interface ScanResultsCardProps {
 }
 
 export function ScanResultsCard({ analysisResult }: ScanResultsCardProps) {
+  const [editMode, setEditMode] = useState(false);
+  const [editedAnalysis, setEditedAnalysis] = useState("");
+  const { toast } = useToast();
+
+  const handleEditClick = () => {
+    if (analysisResult) {
+      setEditedAnalysis(analysisResult.metadata.analysis);
+      setEditMode(true);
+    }
+  };
+
+  const handleSaveEdit = () => {
+    setEditMode(false);
+    toast({
+      title: "Changes saved",
+      description: "Your edits to the analysis have been saved.",
+    });
+  };
+
   return (
     <Card className="overflow-hidden border-none shadow-lg">
       <div className="h-2 bg-gradient-to-r from-indigo-500 to-indigo-700"></div>
@@ -34,9 +56,22 @@ export function ScanResultsCard({ analysisResult }: ScanResultsCardProps) {
         {analysisResult ? (
           <div className="bg-white rounded-lg">
             <div className="mb-4">
-              <h3 className="text-lg font-medium text-gray-800 mb-2">
-                Analysis for: {analysisResult.metadata.original_filename}
-              </h3>
+              <div className="flex justify-between items-center mb-2">
+                <h3 className="text-lg font-medium text-gray-800">
+                  Analysis for: {analysisResult.metadata.original_filename}
+                </h3>
+                {!editMode && (
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={handleEditClick}
+                    className="border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700 text-indigo-600"
+                  >
+                    <Pencil className="mr-2 h-4 w-4" />
+                    Edit Analysis
+                  </Button>
+                )}
+              </div>
               <div className="bg-gray-50 rounded-lg overflow-hidden">
                 <div className="p-2 bg-indigo-50 border-b border-indigo-100">
                   <p className="text-xs text-indigo-700">
@@ -44,15 +79,43 @@ export function ScanResultsCard({ analysisResult }: ScanResultsCardProps) {
                     <span className="font-medium ml-2">Size:</span> {Math.round(analysisResult.metadata.size_bytes / 1024)} KB
                   </p>
                 </div>
-                <Textarea
-                  value={analysisResult.metadata.analysis}
-                  readOnly
-                  className="w-full h-[400px] p-4 border-0 text-sm text-gray-700 font-sans whitespace-pre-wrap bg-gray-50"
-                />
+                {editMode ? (
+                  <>
+                    <Textarea
+                      value={editedAnalysis}
+                      onChange={(e) => setEditedAnalysis(e.target.value)}
+                      className="w-full h-[400px] p-4 border-0 text-sm text-gray-700 font-sans bg-gray-50 focus-visible:ring-indigo-500"
+                    />
+                    <div className="flex justify-end p-2 bg-gray-100">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => setEditMode(false)} 
+                        className="mr-2"
+                      >
+                        Cancel
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        onClick={handleSaveEdit}
+                        className="bg-indigo-600 hover:bg-indigo-700"
+                      >
+                        <Save className="mr-2 h-4 w-4" />
+                        Save Changes
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <Textarea
+                    value={analysisResult.metadata.analysis}
+                    readOnly
+                    className="w-full h-[400px] p-4 border-0 text-sm text-gray-700 font-sans whitespace-pre-wrap bg-gray-50"
+                  />
+                )}
               </div>
               <div className="flex justify-end">
                 <SaveForLater 
-                  text={analysisResult.metadata.analysis}
+                  text={editMode ? editedAnalysis : analysisResult.metadata.analysis}
                   type="Scan"
                 />
               </div>
