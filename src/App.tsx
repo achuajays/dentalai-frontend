@@ -18,6 +18,7 @@ import AIReports from "./pages/AIReports";
 import AIExercise from "./pages/AIExercise";
 import Integration from "./pages/Integration";
 import About from "./pages/About";
+import { FloatingBot } from "./components/DoctorBot/FloatingBot";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <FloatingBot />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
