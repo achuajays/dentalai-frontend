@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
   NavigationMenu, 
@@ -11,19 +11,25 @@ import {
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAuth } from "@/hooks/useAuth";
 
-interface NavbarProps {
-  isLoggedIn: boolean;
-  onLogin: () => void;
-  onLogout: () => void;
-}
-
-export function Navbar({ isLoggedIn, onLogin, onLogout }: NavbarProps) {
+export function Navbar() {
   const isMobile = useIsMobile();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isLoggedIn, logout } = useAuth();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   return (
@@ -76,7 +82,7 @@ export function Navbar({ isLoggedIn, onLogin, onLogout }: NavbarProps) {
                       </NavigationMenuItem>
                       <NavigationMenuItem className="w-full">
                         <Button 
-                          onClick={onLogout} 
+                          onClick={handleLogout} 
                           variant="outline" 
                           className="w-full"
                         >
@@ -86,7 +92,16 @@ export function Navbar({ isLoggedIn, onLogin, onLogout }: NavbarProps) {
                     </NavigationMenuList>
                   </NavigationMenu>
                 ) : (
-                  <Button onClick={onLogin} className="w-full">Login</Button>
+                  <div className="flex flex-col space-y-2">
+                    <Button onClick={handleLogin} className="w-full">Login</Button>
+                    <Button 
+                      onClick={() => navigate("/signup")} 
+                      variant="outline" 
+                      className="w-full"
+                    >
+                      Sign Up
+                    </Button>
+                  </div>
                 )}
               </div>
             )}
@@ -127,12 +142,21 @@ export function Navbar({ isLoggedIn, onLogin, onLogout }: NavbarProps) {
                     </Link>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                    <Button onClick={onLogout} variant="outline">Logout</Button>
+                    <Button onClick={handleLogout} variant="outline">Logout</Button>
                   </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
             ) : (
-              <Button onClick={onLogin} className="bg-blue-600 hover:bg-blue-700">Login</Button>
+              <div className="flex items-center space-x-4">
+                <Button onClick={handleLogin} className="bg-blue-600 hover:bg-blue-700">Login</Button>
+                <Button 
+                  onClick={() => navigate("/signup")}
+                  variant="outline"
+                  className="border-blue-600 text-blue-600 hover:bg-blue-50"
+                >
+                  Sign Up
+                </Button>
+              </div>
             )}
           </>
         )}
