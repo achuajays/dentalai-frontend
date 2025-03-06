@@ -8,6 +8,9 @@ import TranscriptSection from "@/components/AIScribe/TranscriptSection";
 import AIScribeFooter from "@/components/AIScribe/AIScribeFooter";
 import { exportSoapNoteToPdf } from "@/utils/pdfExportService";
 import { toast } from "@/hooks/use-toast";
+import { Navbar } from "@/components/ui/navbar";
+import { Footer } from "@/components/Footer";
+import { AIScribeExplanation } from "@/components/AIScribe/AIScribeExplanation";
 
 const AIScribe = () => {
   const {
@@ -61,36 +64,46 @@ const AIScribe = () => {
   };
   
   return (
-    <div className="container mx-auto py-8 px-4 max-w-4xl">
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold text-blue-600 mb-2">AI Scribe</h1>
-        <p className="text-gray-600">
-          Record and transcribe patient conversations in real-time
-        </p>
-      </div>
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-grow pt-16">
+        <div className="container mx-auto py-8 px-4 max-w-5xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent mb-4">
+              AI Scribe
+            </h1>
+            <p className="text-gray-600 max-w-3xl mx-auto">
+              Record and transcribe patient conversations in real-time, generating comprehensive SOAP notes for efficient documentation.
+            </p>
+          </div>
 
-      <div className="grid grid-cols-1 gap-8">
-        <Card className="shadow-lg">
-          <AIScribeHeader status={status} />
-          
-          <RecordingSection 
-            isRecording={isRecording}
-            isPaused={isPaused}
-            startRecording={startRecording}
-            togglePause={togglePause}
-            stopRecording={stopRecording}
-          />
-          
-          <TranscriptSection 
-            transcript={transcript}
-            saveTranscript={saveTranscript}
-            clearTranscript={clearTranscript}
-            exportPdf={handleExportPdf}
-          />
-          
-          <AIScribeFooter />
-        </Card>
-      </div>
+          <AIScribeExplanation />
+
+          <div className="grid grid-cols-1 gap-8 mt-10">
+            <Card className="shadow-lg border-t-4 border-t-blue-500">
+              <AIScribeHeader status={status} />
+              
+              <RecordingSection 
+                isRecording={isRecording}
+                isPaused={isPaused}
+                startRecording={startRecording}
+                togglePause={togglePause}
+                stopRecording={stopRecording}
+              />
+              
+              <TranscriptSection 
+                transcript={transcript}
+                saveTranscript={saveTranscript}
+                clearTranscript={clearTranscript}
+                exportPdf={handleExportPdf}
+              />
+              
+              <AIScribeFooter />
+            </Card>
+          </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };
