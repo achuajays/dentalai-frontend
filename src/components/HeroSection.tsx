@@ -1,8 +1,13 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { BookAppointmentModal } from "@/components/BookAppointmentModal";
+import { PhoneCallModal } from "@/components/PhoneCallModal";
+
 export function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
+  
   return <section className="relative h-[600px] md:h-[700px] overflow-hidden">
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
       backgroundImage: "url('https://trident.dental/wp-content/uploads/2022/06/pexels-cedric-fauntleroy-4269362.jpg.webp')",
@@ -22,11 +27,19 @@ export function HeroSection() {
             <Button size="lg" className="bg-white text-blue-700 hover:bg-blue-50 text-lg px-8 hover-scale" onClick={() => setIsModalOpen(true)}>
               Book Appointment
             </Button>
-            <Button variant="outline" size="lg" className="border-white text-lg px-8 bg-slate-50 text-blue-700">Book Appointment threw Phone call</Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-white text-lg px-8 bg-slate-50 text-blue-700"
+              onClick={() => setIsPhoneModalOpen(true)}
+            >
+              Book Appointment threw Phone call
+            </Button>
           </div>
         </div>
       </div>
 
       <BookAppointmentModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+      <PhoneCallModal open={isPhoneModalOpen} onOpenChange={setIsPhoneModalOpen} />
     </section>;
 }
