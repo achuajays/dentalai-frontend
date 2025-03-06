@@ -11,7 +11,7 @@ export default function AIReports() {
       <main className="flex-grow pt-16">
         <div className="container mx-auto px-4 py-12">
           <div className="mb-6">
-            <BackButton href="/ai-tools" label="Back to AI Tools" />
+            <BackButton to="/ai-tools" label="Back to AI Tools" />
           </div>
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h1 className="text-3xl md:text-4xl font-bold text-amber-700 mb-4">

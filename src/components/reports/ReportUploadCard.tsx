@@ -1,10 +1,20 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { FileText, Loader2, Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+interface ReportAnalysisResponse {
+  message: string;
+  metadata: {
+    filename: string;
+    original_filename: string;
+    size_bytes: number;
+    upload_time: string;
+    summary: string;
+  };
+}
 
 interface ReportUploadCardProps {
   onAnalysisComplete: (result: ReportAnalysisResponse) => void;
