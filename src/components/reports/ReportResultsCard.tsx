@@ -1,7 +1,11 @@
 
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { FileText } from "lucide-react";
+import { FileText, Save, Pencil } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 import { SaveForLater } from "@/components/SaveForLater";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 interface ReportAnalysisResponse {
   message: string;
@@ -19,12 +23,31 @@ interface ReportResultsCardProps {
 }
 
 export function ReportResultsCard({ analysisResult }: ReportResultsCardProps) {
+  const [editMode, setEditMode] = useState(false);
+  const [editedSummary, setEditedSummary] = useState("");
+  const { toast } = useToast();
+
   // Format summary text with improved readability
   const formatSummary = (text: string) => {
     return text
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\n\n/g, '<br/><br/>')
       .replace(/\n([0-9]+\.)/g, '<br/>$1');
+  };
+  
+  const handleEditClick = () => {
+    if (analysisResult) {
+      setEditedSummary(analysisResult.metadata.summary);
+      setEditMode(true);
+    }
+  };
+
+  const handleSaveEdit = () => {
+    setEditMode(false);
+    toast({
+      title: "Changes saved",
+      description: "Your edits to the report summary have been saved.",
+    });
   };
 
   return (
@@ -41,9 +64,22 @@ export function ReportResultsCard({ analysisResult }: ReportResultsCardProps) {
         {analysisResult ? (
           <div className="bg-white rounded-lg">
             <div className="mb-4">
-              <h3 className="text-lg font-medium text-gray-800 mb-2">
-                Analysis for: {analysisResult.metadata.original_filename}
-              </h3>
+              <div className="flex justify-between items-center mb-2">
+                <h3 className="text-lg font-medium text-gray-800">
+                  Analysis for: {analysisResult.metadata.original_filename}
+                </h3>
+                {!editMode && (
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={handleEditClick}
+                    className="border-amber-300 hover:bg-amber-50 hover:text-amber-700 text-amber-600"
+                  >
+                    <Pencil className="mr-2 h-4 w-4" />
+                    Edit Summary
+                  </Button>
+                )}
+              </div>
               <div className="bg-gray-50 rounded-lg overflow-hidden">
                 <div className="p-2 bg-amber-50 border-b border-amber-100">
                   <p className="text-xs text-amber-700">
@@ -51,14 +87,42 @@ export function ReportResultsCard({ analysisResult }: ReportResultsCardProps) {
                     <span className="font-medium ml-2">Size:</span> {Math.round(analysisResult.metadata.size_bytes / 1024)} KB
                   </p>
                 </div>
-                <div 
-                  className="p-4 text-sm text-gray-700 font-sans whitespace-pre-wrap bg-gray-50 max-h-[400px] overflow-y-auto"
-                  dangerouslySetInnerHTML={{ __html: formatSummary(analysisResult.metadata.summary) }}
-                />
+                {editMode ? (
+                  <>
+                    <Textarea
+                      value={editedSummary}
+                      onChange={(e) => setEditedSummary(e.target.value)}
+                      className="w-full h-[400px] p-4 border-0 text-sm text-gray-700 font-sans bg-gray-50 focus-visible:ring-amber-500"
+                    />
+                    <div className="flex justify-end p-2 bg-gray-100">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => setEditMode(false)} 
+                        className="mr-2"
+                      >
+                        Cancel
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        onClick={handleSaveEdit}
+                        className="bg-amber-600 hover:bg-amber-700"
+                      >
+                        <Save className="mr-2 h-4 w-4" />
+                        Save Changes
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <div 
+                    className="p-4 text-sm text-gray-700 font-sans whitespace-pre-wrap bg-gray-50 max-h-[400px] overflow-y-auto"
+                    dangerouslySetInnerHTML={{ __html: formatSummary(analysisResult.metadata.summary) }}
+                  />
+                )}
               </div>
               <div className="flex justify-end">
                 <SaveForLater 
-                  text={analysisResult.metadata.summary}
+                  text={editMode ? editedSummary : analysisResult.metadata.summary}
                   type="Report"
                 />
               </div>
