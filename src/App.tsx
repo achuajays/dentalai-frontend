@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import AIScribe from "./pages/AIScribe";
 import Appointments from "./pages/Appointments";
+import AITools from "./pages/AITools";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/signup" element={<Signup />} />
           <Route path="/ai-scribe" element={<AIScribe />} />
           <Route path="/appointments" element={<Appointments />} />
+          <Route path="/ai-tools" element={<AITools />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
