@@ -1,7 +1,6 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, User, Mail } from "lucide-react";
+import { Calendar, User, Mail, Loader2 } from "lucide-react";
 import { Appointment } from "@/types/Appointment";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
