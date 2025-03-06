@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { User, Mail, MapPin, Phone, Building, Calendar, Save, Edit, LogOut } from "lucide-react";
+import { User, Mail, MapPin, Phone, Building, Calendar, Save, Edit, LogOut, Home } from "lucide-react";
 
 type UserProfile = {
   firstName: string | null;
@@ -88,6 +88,10 @@ const Account = () => {
     });
   };
 
+  const handleHomeClick = () => {
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-50 to-blue-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
@@ -96,7 +100,16 @@ const Account = () => {
           <p className="text-gray-600 mt-2">Manage your personal information and preferences</p>
         </div>
 
-        <div className="flex justify-end mb-4">
+        <div className="flex justify-between mb-4">
+          <Button 
+            variant="outline" 
+            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+            onClick={handleHomeClick}
+          >
+            <Home className="h-4 w-4" />
+            Home
+          </Button>
+          
           <Button 
             variant="outline" 
             className="flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
