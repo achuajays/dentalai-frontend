@@ -1,3 +1,4 @@
+
 import { User, Smile, Star, Heart, X, FileText } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -16,12 +17,14 @@ export function ServicesSection() {
           {services.map((service, index) => (
             <Card 
               key={index} 
-              className="border-none shadow-sm hover:shadow-md transition-all hover-scale"
+              className="border-none shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
             >
               <CardHeader className="pb-2">
-                <div className="text-blue-600 mb-2">{service.icon}</div>
-                <CardTitle>{service.title}</CardTitle>
-                <CardDescription>{service.shortDescription}</CardDescription>
+                <div className="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center text-blue-600 mb-4">
+                  {service.icon}
+                </div>
+                <CardTitle className="text-xl text-blue-700">{service.title}</CardTitle>
+                <CardDescription className="text-blue-500 font-medium">{service.shortDescription}</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600">
