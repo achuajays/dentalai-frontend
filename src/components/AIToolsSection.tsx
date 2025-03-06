@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Radiation, Image, ClipboardCheck, FileText } from "lucide-react";
+import { Radiation, Scan, ClipboardCheck, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function AIToolsSection() {
@@ -68,15 +68,15 @@ const aiTools = [
   },
   {
     title: "Medical Imaging",
-    shortDescription: "Enhanced 3D imaging for treatment",
-    description: "Transform 2D scans into detailed 3D models for comprehensive visualization, helping dentists plan complex procedures and communicate treatment plans more effectively to patients.",
-    icon: <Image size={28} color="white" />,
+    shortDescription: "Advanced 3D scan analysis",
+    description: "Upload dental scans for comprehensive AI analysis that identifies caries, evaluates severity, and provides detailed assessment with treatment implications, all with advanced image processing technology.",
+    icon: <Scan size={28} color="white" />,
     bgColor: "bg-purple-600",
     features: [
-      "3D reconstruction from 2D images",
-      "Interactive digital models",
-      "Cross-sectional analysis",
-      "Virtual treatment simulation"
+      "Dental caries detection and classification",
+      "Severity assessment of dental conditions",
+      "Treatment implications and recommendations",
+      "Detailed analytical reports with confidence levels"
     ],
     link: "/ai-imaging"
   },
