@@ -22,9 +22,7 @@ export function HeroSection() {
             <Button size="lg" className="bg-white text-blue-700 hover:bg-blue-50 text-lg px-8 hover-scale" onClick={() => setIsModalOpen(true)}>
               Book Appointment
             </Button>
-            <Button variant="outline" size="lg" className="border-white text-lg px-8 bg-slate-50 text-blue-700">
-              Our Services
-            </Button>
+            <Button variant="outline" size="lg" className="border-white text-lg px-8 bg-slate-50 text-blue-700">Book Appointment threw Phone call</Button>
           </div>
         </div>
       </div>
