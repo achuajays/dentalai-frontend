@@ -4,3 +4,11 @@ export interface TranscriptLine {
   type: "local" | "remote";
   timestamp: string;
 }
+
+export interface SoapNote {
+  subjective: string;
+  objective: string;
+  assessment: string;
+  plan: string;
+  summary: string;
+}

@@ -1,23 +1,17 @@
+
 import { useState, useRef, useEffect } from "react";
 import { TranscriptLine } from "@/types/AIScribe";
 import { useToast } from "@/hooks/use-toast";
-
-type MessageType = "local" | "remote";
-
-interface SoapNote {
-  subjective: string;
-  objective: string;
-  assessment: string;
-  plan: string;
-  summary: string;
-}
+import { generateSoapNote, formatSoapNote } from "@/utils/soapNoteService";
+import { setupWebSocketConnection, sendKeepAlive } from "@/utils/webSocketService";
+import { initializeMediaRecorder, attachDataAvailableListener } from "@/utils/mediaRecorderService";
+import { formatTime } from "@/utils/timeFormatUtils";
 
 export default function useAudioRecording() {
   const [status, setStatus] = useState<string>("Ready to connect");
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [transcript, setTranscript] = useState<TranscriptLine[]>([]);
-  const [messageType, setMessageType] = useState<MessageType>("local");
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
@@ -31,99 +25,49 @@ export default function useAudioRecording() {
     };
   }, []);
 
-  const formatTime = (): string => {
-    const now = new Date();
-    return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-  };
-
-  const handleAudioData = (event: BlobEvent) => {
-    if (event.data.size > 0 && socketRef.current?.readyState === WebSocket.OPEN) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const audioBase64 = reader.result?.toString().split(',')[1];
-        if (audioBase64) {
-          const message = {
-            audio: audioBase64,
-          };
-          socketRef.current?.send(JSON.stringify(message));
-        }
-      };
-      reader.readAsDataURL(event.data);
-    }
+  const addTranscriptLine = (text: string, type: "local" | "remote", timestamp: string) => {
+    setTranscript(prev => [
+      ...prev, 
+      { text, type, timestamp }
+    ]);
   };
 
   const startRecording = async () => {
-    try {
-      const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      streamRef.current = audioStream;
-
-      if (!MediaRecorder.isTypeSupported('audio/webm')) {
-        toast({
-          title: "Browser Not Supported",
-          description: "Your browser doesn't support the required audio format.",
-          variant: "destructive"
-        });
-        return;
-      }
-
-      mediaRecorderRef.current = new MediaRecorder(audioStream, {
-        mimeType: 'audio/webm',
-      });
-
-      socketRef.current = new WebSocket('wss://dentalai-production.up.railway.app/ws');
-
-      socketRef.current.onopen = () => {
-        setStatus("Connected");
-        setIsRecording(true);
+    await initializeMediaRecorder(
+      (recorder, stream) => {
+        mediaRecorderRef.current = recorder;
+        streamRef.current = stream;
         
-        mediaRecorderRef.current?.start(500);
+        socketRef.current = setupWebSocketConnection(
+          setStatus,
+          addTranscriptLine,
+          () => {
+            clearKeepAliveInterval();
+            resetRecordingState();
+          },
+          formatTime
+        );
         
-        mediaRecorderRef.current?.addEventListener('dataavailable', handleAudioData);
-      };
-
-      socketRef.current.onmessage = (message) => {
-        const received = JSON.parse(message.data);
-        if (received.transcription) {
-          setTranscript(prev => [
-            ...prev, 
-            { 
-              text: received.transcription,
-              type: messageType,
-              timestamp: formatTime()
-            }
-          ]);
+        recorder.onstart = () => {
+          setIsRecording(true);
+          setStatus("Recording");
+        };
+        
+        attachDataAvailableListener(recorder, socketRef.current);
+        
+        // Start recording once WebSocket is connected
+        socketRef.current.onopen = () => {
+          setStatus("Connected");
+          setIsRecording(true);
           
-          setMessageType(messageType === 'local' ? 'remote' : 'local');
-        }
-      };
-
-      socketRef.current.onclose = () => {
-        setStatus("Connection closed");
-        clearKeepAliveInterval();
+          recorder.start(500);
+        };
+      },
+      (errorMessage) => {
+        setStatus(errorMessage);
         resetRecordingState();
-      };
-
-      socketRef.current.onerror = (error) => {
-        setStatus("Error occurred");
-        console.error('WebSocket error:', error);
-        toast({
-          title: "Connection Error",
-          description: "Failed to connect to the transcription service.",
-          variant: "destructive"
-        });
-        clearKeepAliveInterval();
-        resetRecordingState();
-      };
-    } catch (err) {
-      setStatus("Failed to access microphone");
-      console.error('Microphone error:', err);
-      toast({
-        title: "Microphone Access Denied",
-        description: "Please allow microphone access to use the AI Scribe.",
-        variant: "destructive"
-      });
-      resetRecordingState();
-    }
+      }
+    );
   };
 
   const togglePause = () => {
@@ -136,10 +80,7 @@ export default function useAudioRecording() {
       
       if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
         keepAliveIntervalRef.current = window.setInterval(() => {
-          const keepAliveMessage = {
-            type: "KeepAlive"
-          };
-          socketRef.current?.send(JSON.stringify(keepAliveMessage));
+          sendKeepAlive(socketRef.current);
         }, 1000);
       }
     } else if (mediaRecorderRef.current.state === 'paused') {
@@ -185,72 +126,22 @@ export default function useAudioRecording() {
     setIsPaused(false);
   };
 
-  const generateSoapNote = async () => {
-    if (transcript.length === 0) {
-      toast({
-        title: "Nothing to generate",
-        description: "Start recording to create a transcript first.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    try {
-      const patientInfo = transcript
-        .map(line => line.text)
-        .join(" ");
+  const saveTranscript = async () => {
+    const patientInfo = transcript
+      .map(line => line.text)
+      .join(" ");
       
-      const url = `https://dentalai-production.up.railway.app/soap/generate?patient_id=1&patient_info=${encodeURIComponent(patientInfo)}`;
+    const soapNote = await generateSoapNote(patientInfo);
+    
+    if (soapNote) {
+      const formattedNote = formatSoapNote(soapNote, formatTime);
+      setTranscript(formattedNote);
       
       toast({
-        title: "Generating SOAP Note",
-        description: "Please wait while we generate your SOAP note...",
-      });
-      
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'accept': 'application/json'
-        }
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to generate SOAP note');
-      }
-      
-      const result = await response.json();
-      const soapNote: SoapNote = result.data.soap_note;
-      
-      displaySoapNote(soapNote);
-    } catch (error) {
-      console.error('Error generating SOAP note:', error);
-      toast({
-        title: "Generation Failed",
-        description: "Failed to generate SOAP note. Please try again.",
-        variant: "destructive"
+        title: "SOAP Note Generated",
+        description: "Your SOAP note has been displayed below.",
       });
     }
-  };
-
-  const displaySoapNote = (soapNote: SoapNote) => {
-    const formattedNote: TranscriptLine[] = [
-      { text: `Subjective: ${soapNote.subjective}`, type: 'local', timestamp: formatTime() },
-      { text: `Objective: ${soapNote.objective}`, type: 'local', timestamp: formatTime() },
-      { text: `Assessment: ${soapNote.assessment}`, type: 'local', timestamp: formatTime() },
-      { text: `Plan: ${soapNote.plan}`, type: 'local', timestamp: formatTime() },
-      { text: `Summary: ${soapNote.summary}`, type: 'local', timestamp: formatTime() }
-    ];
-    
-    setTranscript(formattedNote);
-    
-    toast({
-      title: "SOAP Note Generated",
-      description: "Your SOAP note has been displayed below.",
-    });
-  };
-
-  const saveTranscript = () => {
-    generateSoapNote();
   };
 
   const clearTranscript = () => {
