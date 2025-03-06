@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { FileText, FilePdf } from "lucide-react";
+import { FileText, File } from "lucide-react";
 
 interface TranscriptActionsProps {
   onSave: () => void;
@@ -28,7 +28,7 @@ const TranscriptActions: React.FC<TranscriptActionsProps> = ({
       
       {isSoapNote && (
         <Button variant="outline" size="sm" onClick={onExportPdf} disabled={disabled} className="border-blue-600 text-blue-600 hover:bg-blue-50">
-          <FilePdf className="mr-2 h-4 w-4" />
+          <File className="mr-2 h-4 w-4" />
           Export PDF
         </Button>
       )}
