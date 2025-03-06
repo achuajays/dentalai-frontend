@@ -19,7 +19,7 @@ const TranscriptViewer: React.FC<TranscriptViewerProps> = ({ transcript }) => {
     <div className="space-y-2">
       {transcript.map((line, index) => (
         <div key={index} className="text-gray-800">
-          <span className="text-xs text-gray-500">[{line.timestamp}]</span> {line.text}
+          {line.text}
         </div>
       ))}
     </div>
