@@ -3,23 +3,15 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
-  FileText,
   Microscope,
   Activity,
   Zap,
   BarChart3,
-  Dumbbell,
-  Globe
+  Dumbbell
 } from "lucide-react";
 
 export function AIToolsSection() {
   const aiTools = [
-    {
-      title: "AI Scribe",
-      description: "Convert patient conversations into structured SOAP notes",
-      icon: <FileText className="w-10 h-10 text-blue-600" />,
-      link: "/ai-scribe"
-    },
     {
       title: "AI X-Ray Analysis",
       description: "Automated detection of dental conditions from X-rays",
@@ -49,12 +41,6 @@ export function AIToolsSection() {
       description: "Find targeted exercises for rehabilitation and recovery",
       icon: <Dumbbell className="w-10 h-10 text-blue-600" />,
       link: "/ai-exercise"
-    },
-    {
-      title: "EMR Integration",
-      description: "Seamlessly connect with any EMR system",
-      icon: <Globe className="w-10 h-10 text-blue-600" />,
-      link: "/integrations"
     }
   ];
 
