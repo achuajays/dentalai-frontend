@@ -1,12 +1,53 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useState } from "react";
+import { Navbar } from "@/components/ui/navbar";
+import { HeroSection } from "@/components/HeroSection";
+import { WelcomeSection } from "@/components/WelcomeSection";
+import { ServicesSection } from "@/components/ServicesSection";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
+import { TeamSection } from "@/components/TeamSection";
+import { ContactSection } from "@/components/ContactSection";
+import { Footer } from "@/components/Footer";
+import { toast } from "@/hooks/use-toast";
 
 const Index = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    // In a real app, this would connect to an authentication system
+    setIsLoggedIn(true);
+    toast({
+      title: "Logged in successfully",
+      description: "Welcome back to DentalCare+",
+    });
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    toast({
+      title: "Logged out",
+      description: "You have been logged out successfully",
+    });
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-white">
+      <Navbar 
+        isLoggedIn={isLoggedIn} 
+        onLogin={handleLogin} 
+        onLogout={handleLogout} 
+      />
+      
+      <main className="pt-16"> {/* Add padding to account for fixed navbar */}
+        <HeroSection />
+        <WelcomeSection />
+        <ServicesSection />
+        <TestimonialsSection />
+        <TeamSection />
+        <ContactSection />
+      </main>
+      
+      <Footer />
     </div>
   );
 };
