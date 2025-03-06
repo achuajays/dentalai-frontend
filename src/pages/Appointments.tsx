@@ -20,19 +20,30 @@ const Appointments: React.FC = () => {
     queryFn: fetchAppointments,
     gcTime: 5 * 60 * 1000, // 5 minutes
     staleTime: 2 * 60 * 1000, // 2 minutes
-    onSettled: (_data, error) => {
-      if (error) {
+    meta: {
+      errorHandler: (error: Error) => {
         console.error("Error loading appointments:", error);
         toast({
           title: "Error",
           description: "Failed to load appointments. Please try again later.",
           variant: "destructive",
         });
-      } else {
-        console.log("Appointments loaded successfully");
       }
     }
   });
+
+  React.useEffect(() => {
+    if (error) {
+      console.error("Error loading appointments:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load appointments. Please try again later.",
+        variant: "destructive",
+      });
+    } else if (appointments) {
+      console.log("Appointments loaded successfully");
+    }
+  }, [appointments, error, toast]);
 
   return (
     <div className="min-h-screen bg-gray-50">
