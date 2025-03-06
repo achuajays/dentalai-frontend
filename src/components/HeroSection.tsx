@@ -7,7 +7,7 @@ export function HeroSection() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: "url('https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=80&w=1974&auto=format&fit=crop')",
+          backgroundImage: "url('https://trident.dental/wp-content/uploads/2022/06/pexels-cedric-fauntleroy-4269362.jpg.webp')",
           filter: "brightness(0.8)"
         }}
       ></div>
