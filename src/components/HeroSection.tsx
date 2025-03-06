@@ -7,7 +7,7 @@ export function HeroSection() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: "url('/lovable-uploads/93926d8b-dc9e-4883-bbf5-d6a61384f648.png')",
+          backgroundImage: "url('/heroimage.jpg')",
           filter: "brightness(0.9)"
         }}
       ></div>
