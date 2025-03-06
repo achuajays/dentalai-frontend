@@ -33,7 +33,7 @@ export function HeroSection() {
               className="border-white text-lg px-8 bg-slate-50 text-blue-700"
               onClick={() => setIsPhoneModalOpen(true)}
             >
-              Book Appointment threw Phone call
+              Book Appointment through Phone Call
             </Button>
           </div>
         </div>

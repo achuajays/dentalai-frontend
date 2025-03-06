@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Phone, Check } from "lucide-react";
+import { Phone, Check, PhoneCall } from "lucide-react";
 
 interface PhoneCallModalProps {
   open: boolean;
@@ -48,10 +48,10 @@ export const PhoneCallModal: React.FC<PhoneCallModalProps> = ({
 
       const data = await response.json();
 
-      if (data.status === "success") {
+      if (data.message === "Call initiated successfully" && data.response.status === "queued") {
         toast({
           title: "Success",
-          description: "We'll call you shortly to schedule your appointment",
+          description: "Call scheduled successfully. We'll call you shortly.",
         });
         
         // Reset form and close modal
@@ -87,7 +87,7 @@ export const PhoneCallModal: React.FC<PhoneCallModalProps> = ({
               Phone Number (with country code)
             </Label>
             <div className="relative">
-              <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+              <PhoneCall className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
               <Input
                 id="phoneNumber"
                 type="tel"
