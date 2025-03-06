@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { SaveForLater } from "@/components/SaveForLater";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import ReactMarkdown from 'react-markdown';
 
 interface ScanAnalysisResponse {
   message: string;
@@ -106,11 +107,11 @@ export function ScanResultsCard({ analysisResult }: ScanResultsCardProps) {
                     </div>
                   </>
                 ) : (
-                  <Textarea
-                    value={analysisResult.metadata.analysis}
-                    readOnly
-                    className="w-full h-[400px] p-4 border-0 text-sm text-gray-700 font-sans whitespace-pre-wrap bg-gray-50"
-                  />
+                  <div className="p-4 bg-gray-50 max-h-[400px] overflow-y-auto">
+                    <ReactMarkdown className="text-sm prose prose-sm max-w-none prose-headings:text-indigo-800 prose-a:text-indigo-600">
+                      {analysisResult.metadata.analysis}
+                    </ReactMarkdown>
+                  </div>
                 )}
               </div>
               <div className="flex justify-end">

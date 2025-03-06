@@ -1,7 +1,7 @@
 
 import React from "react";
 import { TranscriptLine } from "@/types/AIScribe";
-import { cn } from "@/lib/utils";
+import ReactMarkdown from 'react-markdown';
 
 interface TranscriptViewerProps {
   transcript: TranscriptLine[];
@@ -41,38 +41,48 @@ const TranscriptViewer: React.FC<TranscriptViewerProps> = ({ transcript }) => {
         
         <div className="bg-soft-yellow p-4 rounded-lg border border-yellow-200 shadow-sm">
           <h4 className="font-bold text-yellow-800 mb-2">Subjective</h4>
-          <p className="text-gray-800">{subjective}</p>
+          <ReactMarkdown className="text-gray-800 prose prose-sm max-w-none">
+            {subjective || ""}
+          </ReactMarkdown>
         </div>
         
         <div className="bg-soft-blue p-4 rounded-lg border border-blue-200 shadow-sm">
           <h4 className="font-bold text-blue-800 mb-2">Objective</h4>
-          <p className="text-gray-800">{objective}</p>
+          <ReactMarkdown className="text-gray-800 prose prose-sm max-w-none">
+            {objective || ""}
+          </ReactMarkdown>
         </div>
         
         <div className="bg-soft-purple p-4 rounded-lg border border-purple-200 shadow-sm">
           <h4 className="font-bold text-purple-800 mb-2">Assessment</h4>
-          <p className="text-gray-800">{assessment}</p>
+          <ReactMarkdown className="text-gray-800 prose prose-sm max-w-none">
+            {assessment || ""}
+          </ReactMarkdown>
         </div>
         
         <div className="bg-soft-green p-4 rounded-lg border border-green-200 shadow-sm">
           <h4 className="font-bold text-green-800 mb-2">Plan</h4>
-          <p className="text-gray-800">{plan}</p>
+          <ReactMarkdown className="text-gray-800 prose prose-sm max-w-none">
+            {plan || ""}
+          </ReactMarkdown>
         </div>
         
         <div className="bg-soft-peach p-4 rounded-lg border border-orange-200 shadow-sm">
           <h4 className="font-bold text-orange-800 mb-2">Summary</h4>
-          <p className="text-gray-800">{summary}</p>
+          <ReactMarkdown className="text-gray-800 prose prose-sm max-w-none">
+            {summary || ""}
+          </ReactMarkdown>
         </div>
       </div>
     );
   }
 
-  // Regular transcript display as continuous text
+  // Regular transcript display as continuous text with markdown support
   return (
     <div className="p-1">
-      <p className="text-gray-800">
+      <ReactMarkdown className="text-gray-800 prose prose-sm max-w-none">
         {transcript.map((line) => line.text).join(" ")}
-      </p>
+      </ReactMarkdown>
     </div>
   );
 };

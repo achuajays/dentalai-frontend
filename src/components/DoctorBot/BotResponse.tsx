@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { FileText, Bot } from "lucide-react";
+import ReactMarkdown from 'react-markdown';
 
 interface BotResponseProps {
   text: string;
@@ -45,12 +46,16 @@ export function BotResponse({ text }: BotResponseProps) {
         <div className="flex items-start">
           <FileText className="h-4 w-4 text-amber-600 mt-0.5 mr-2 flex-shrink-0" />
           <div className="bg-amber-50 p-3 rounded-md border border-amber-100 w-full">
-            <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
-              {displayText}
-              {!isComplete && (
+            {isComplete ? (
+              <ReactMarkdown className="text-sm text-gray-700 prose prose-sm prose-headings:text-amber-800 prose-a:text-amber-600 max-w-none">
+                {displayText}
+              </ReactMarkdown>
+            ) : (
+              <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
+                {displayText}
                 <span className="inline-block w-2 h-4 bg-amber-500 ml-1 animate-pulse"></span>
-              )}
-            </p>
+              </p>
+            )}
           </div>
         </div>
       </div>

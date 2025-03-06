@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { SaveForLater } from "@/components/SaveForLater";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import ReactMarkdown from 'react-markdown';
 
 interface ReportAnalysisResponse {
   message: string;
@@ -26,14 +27,6 @@ export function ReportResultsCard({ analysisResult }: ReportResultsCardProps) {
   const [editMode, setEditMode] = useState(false);
   const [editedSummary, setEditedSummary] = useState("");
   const { toast } = useToast();
-
-  // Format summary text with improved readability
-  const formatSummary = (text: string) => {
-    return text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n\n/g, '<br/><br/>')
-      .replace(/\n([0-9]+\.)/g, '<br/>$1');
-  };
   
   const handleEditClick = () => {
     if (analysisResult) {
@@ -114,10 +107,11 @@ export function ReportResultsCard({ analysisResult }: ReportResultsCardProps) {
                     </div>
                   </>
                 ) : (
-                  <div 
-                    className="p-4 text-sm text-gray-700 font-sans whitespace-pre-wrap bg-gray-50 max-h-[400px] overflow-y-auto"
-                    dangerouslySetInnerHTML={{ __html: formatSummary(analysisResult.metadata.summary) }}
-                  />
+                  <div className="p-4 bg-gray-50 max-h-[400px] overflow-y-auto">
+                    <ReactMarkdown className="text-sm prose prose-sm max-w-none prose-headings:text-amber-800 prose-a:text-amber-600">
+                      {analysisResult.metadata.summary}
+                    </ReactMarkdown>
+                  </div>
                 )}
               </div>
               <div className="flex justify-end">

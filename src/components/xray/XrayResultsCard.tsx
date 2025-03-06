@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileImage, Save, Pencil } from "lucide-react";
@@ -6,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { SaveForLater } from "@/components/SaveForLater";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import ReactMarkdown from 'react-markdown';
 
 interface XrayResultsCardProps {
   analysisResult: { filename: string; analysis: string } | null;
@@ -15,15 +15,6 @@ export function XrayResultsCard({ analysisResult }: XrayResultsCardProps) {
   const [editMode, setEditMode] = useState(false);
   const [editedAnalysis, setEditedAnalysis] = useState("");
   const { toast } = useToast();
-
-  // Format analysis text with improved readability
-  const formatAnalysis = (text: string) => {
-    // Replace asterisks with bullet points and add line breaks
-    return text
-      .replace(/\*/g, '•')
-      .replace(/\.\s+/g, '.\n\n')
-      .replace(/:\s+/g, ':\n');
-  };
 
   const handleEditClick = () => {
     if (analysisResult) {
@@ -99,9 +90,9 @@ export function XrayResultsCard({ analysisResult }: XrayResultsCardProps) {
                 </div>
               ) : (
                 <div className="bg-gray-50 p-4 rounded-lg max-h-[500px] overflow-y-auto">
-                  <pre className="text-sm whitespace-pre-wrap font-sans text-gray-700">
-                    {formatAnalysis(analysisResult.analysis)}
-                  </pre>
+                  <ReactMarkdown className="text-sm prose prose-sm max-w-none prose-headings:text-green-800 prose-a:text-green-600">
+                    {analysisResult.analysis}
+                  </ReactMarkdown>
                 </div>
               )}
               

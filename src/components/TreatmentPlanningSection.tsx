@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { ClipboardCheck, Loader2, FilePlus2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import ReactMarkdown from 'react-markdown';
 
 interface TreatmentPlanResponse {
   condition: string;
@@ -61,16 +62,6 @@ export function TreatmentPlanningSection() {
     } finally {
       setIsLoading(false);
     }
-  };
-  
-  // Format treatment plan text with improved readability
-  const formatTreatmentPlan = (text: string) => {
-    // Add proper formatting to lists, headings, and paragraphs
-    return text
-      .replace(/\*\*/g, '') // Remove ** formatting
-      .replace(/\*/g, '• ') // Replace * with bullet points
-      .replace(/\n\n/g, '\n\n') // Ensure paragraph breaks
-      .replace(/^\d+\.\s+/gm, (match) => `\n${match}`); // Add space before numbered lists
   };
 
   return (
@@ -143,9 +134,9 @@ export function TreatmentPlanningSection() {
                   Generated on: {new Date(treatmentPlan.generated_at).toLocaleString()}
                 </p>
                 <div className="bg-gray-50 p-4 rounded-lg max-h-[500px] overflow-y-auto">
-                  <pre className="text-sm whitespace-pre-wrap font-sans text-gray-700">
-                    {formatTreatmentPlan(treatmentPlan.treatment_plan)}
-                  </pre>
+                  <ReactMarkdown className="text-sm prose prose-sm max-w-none prose-headings:text-green-800 prose-a:text-green-600 prose-li:marker:text-green-500">
+                    {treatmentPlan.treatment_plan}
+                  </ReactMarkdown>
                 </div>
               </div>
             </div>
