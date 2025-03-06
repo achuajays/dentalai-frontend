@@ -104,7 +104,7 @@ const About = () => {
                   </div>
                   <Button className="flex items-center gap-2 rounded-full bg-blue-500 hover:bg-blue-600">
                     <QrCode size={16} />
-                    <span>Open Telegram Bot</span>
+                    <span>Open Discord Bot</span>
                     <ExternalLink size={16} />
                   </Button>
                 </div>
@@ -130,7 +130,7 @@ const About = () => {
                   </div>
                   <Button className="flex items-center gap-2 rounded-full bg-indigo-500 hover:bg-indigo-600">
                     <QrCode size={16} />
-                    <span>Join Discord Community</span>
+                    <span>Join Telegram Community</span>
                     <ExternalLink size={16} />
                   </Button>
                 </div>
