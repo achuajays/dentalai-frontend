@@ -16,12 +16,10 @@ const TranscriptViewer: React.FC<TranscriptViewerProps> = ({ transcript }) => {
   }
 
   return (
-    <div className="space-y-2">
-      {transcript.map((line, index) => (
-        <div key={index} className="text-gray-800">
-          {line.text}
-        </div>
-      ))}
+    <div className="p-1">
+      <p className="text-gray-800">
+        {transcript.map((line, index) => line.text).join(" ")}
+      </p>
     </div>
   );
 };
