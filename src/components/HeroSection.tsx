@@ -7,8 +7,8 @@ export function HeroSection() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: "url('/heroimage.jpg')",
-          filter: "brightness(0.9)"
+          backgroundImage: "url('https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=80&w=1974&auto=format&fit=crop')",
+          filter: "brightness(0.8)"
         }}
       ></div>
       <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 to-blue-700/30"></div>
