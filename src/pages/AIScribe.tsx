@@ -52,7 +52,9 @@ const AIScribe = () => {
             
             <div className="mt-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold">Transcript</h3>
+                <h3 className="text-lg font-semibold">
+                  {transcript.some(line => line.text.startsWith("Subjective:")) ? "SOAP Note" : "Transcript"}
+                </h3>
                 <TranscriptActions 
                   onSave={saveTranscript}
                   onClear={clearTranscript}
@@ -60,7 +62,7 @@ const AIScribe = () => {
                 />
               </div>
               
-              <div className="bg-gray-50 rounded-lg p-4 min-h-[300px] max-h-[400px] overflow-y-auto border border-gray-200">
+              <div className="bg-gray-50 rounded-lg p-4 min-h-[400px] max-h-[600px] overflow-y-auto border border-gray-200">
                 <TranscriptViewer transcript={transcript} />
               </div>
             </div>

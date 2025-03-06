@@ -25,7 +25,6 @@ export default function useAudioRecording() {
   const keepAliveIntervalRef = useRef<number | null>(null);
   const { toast } = useToast();
 
-  // Clean up resources when component unmounts
   useEffect(() => {
     return () => {
       stopRecording();
@@ -55,11 +54,9 @@ export default function useAudioRecording() {
 
   const startRecording = async () => {
     try {
-      // Get audio stream
       const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = audioStream;
 
-      // Check browser support
       if (!MediaRecorder.isTypeSupported('audio/webm')) {
         toast({
           title: "Browser Not Supported",
@@ -69,29 +66,24 @@ export default function useAudioRecording() {
         return;
       }
 
-      // Create media recorder
       mediaRecorderRef.current = new MediaRecorder(audioStream, {
         mimeType: 'audio/webm',
       });
 
-      // Connect to WebSocket
       socketRef.current = new WebSocket('wss://dentalai-production.up.railway.app/ws');
 
       socketRef.current.onopen = () => {
         setStatus("Connected");
         setIsRecording(true);
         
-        // Start recording
         mediaRecorderRef.current?.start(500);
         
-        // Handle audio data
         mediaRecorderRef.current?.addEventListener('dataavailable', handleAudioData);
       };
 
       socketRef.current.onmessage = (message) => {
         const received = JSON.parse(message.data);
         if (received.transcription) {
-          // Add new transcript line with current message type
           setTranscript(prev => [
             ...prev, 
             { 
@@ -101,7 +93,6 @@ export default function useAudioRecording() {
             }
           ]);
           
-          // Toggle message type between local and remote
           setMessageType(messageType === 'local' ? 'remote' : 'local');
         }
       };
@@ -143,7 +134,6 @@ export default function useAudioRecording() {
       setStatus("Paused");
       setIsPaused(true);
       
-      // Start sending keep-alive messages every second
       if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
         keepAliveIntervalRef.current = window.setInterval(() => {
           const keepAliveMessage = {
@@ -157,7 +147,6 @@ export default function useAudioRecording() {
       setStatus("Recording");
       setIsPaused(false);
       
-      // Stop sending keep-alive messages
       clearKeepAliveInterval();
     }
   };
@@ -207,7 +196,6 @@ export default function useAudioRecording() {
     }
 
     try {
-      // Convert transcript to text
       const patientInfo = transcript
         .map(line => line.text)
         .join(" ");
@@ -233,13 +221,7 @@ export default function useAudioRecording() {
       const result = await response.json();
       const soapNote: SoapNote = result.data.soap_note;
       
-      // Display SOAP note
       displaySoapNote(soapNote);
-      
-      toast({
-        title: "SOAP Note Generated",
-        description: "Your SOAP note has been successfully generated.",
-      });
     } catch (error) {
       console.error('Error generating SOAP note:', error);
       toast({
@@ -249,9 +231,8 @@ export default function useAudioRecording() {
       });
     }
   };
-  
+
   const displaySoapNote = (soapNote: SoapNote) => {
-    // Replace transcript with SOAP note in a formatted way
     const formattedNote: TranscriptLine[] = [
       { text: `Subjective: ${soapNote.subjective}`, type: 'local', timestamp: formatTime() },
       { text: `Objective: ${soapNote.objective}`, type: 'local', timestamp: formatTime() },
@@ -261,6 +242,11 @@ export default function useAudioRecording() {
     ];
     
     setTranscript(formattedNote);
+    
+    toast({
+      title: "SOAP Note Generated",
+      description: "Your SOAP note has been displayed below.",
+    });
   };
 
   const saveTranscript = () => {
