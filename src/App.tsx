@@ -14,6 +14,7 @@ import AITools from "./pages/AITools";
 import AIXray from "./pages/AIXray";
 import AITreatment from "./pages/AITreatment";
 import AIImaging from "./pages/AIImaging";
+import AIReports from "./pages/AIReports";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/ai-xray" element={<AIXray />} />
           <Route path="/ai-treatment" element={<AITreatment />} />
           <Route path="/ai-imaging" element={<AIImaging />} />
+          <Route path="/ai-reports" element={<AIReports />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
