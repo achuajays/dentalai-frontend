@@ -7,11 +7,11 @@ export function HeroSection() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: "url('https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=80&w=1974&auto=format&fit=crop')",
-          filter: "brightness(0.8)"
+          backgroundImage: "url('/lovable-uploads/93926d8b-dc9e-4883-bbf5-d6a61384f648.png')",
+          filter: "brightness(0.9)"
         }}
       ></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-700/40"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 to-blue-700/30"></div>
       
       <div className="relative h-full max-w-7xl mx-auto px-6 md:px-10 flex flex-col justify-center">
         <div className="max-w-2xl animate-fade-in">
