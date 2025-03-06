@@ -1,7 +1,11 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { BookAppointmentModal } from "@/components/BookAppointmentModal";
 
 export function HeroSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section className="relative h-[600px] md:h-[700px] overflow-hidden">
       <div 
@@ -25,6 +29,7 @@ export function HeroSection() {
             <Button 
               size="lg" 
               className="bg-white text-blue-700 hover:bg-blue-50 text-lg px-8 hover-scale"
+              onClick={() => setIsModalOpen(true)}
             >
               Book Appointment
             </Button>
@@ -38,6 +43,11 @@ export function HeroSection() {
           </div>
         </div>
       </div>
+
+      <BookAppointmentModal 
+        open={isModalOpen} 
+        onOpenChange={setIsModalOpen} 
+      />
     </section>
   );
 }
