@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Radiation, Scan, ClipboardCheck, FileText } from "lucide-react";
+import { Radiation, Scan, ClipboardCheck, FileText, Dumbbell } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function AIToolsSection() {
@@ -107,5 +107,19 @@ const aiTools = [
       "Simplified report generation"
     ],
     link: "/ai-reports"
+  },
+  {
+    title: "Exercise Finder",
+    shortDescription: "AI-powered exercise recommendations",
+    description: "Find targeted exercises for specific body parts to help patients with rehabilitation and recovery. Our AI provides detailed instructions and visual demonstrations for proper technique.",
+    icon: <Dumbbell size={28} color="white" />,
+    bgColor: "bg-red-600",
+    features: [
+      "Targeted body part exercises",
+      "Detailed instructions for proper form",
+      "Equipment-based filtering options",
+      "Visual demonstration references"
+    ],
+    link: "/ai-exercise"
   }
 ];
