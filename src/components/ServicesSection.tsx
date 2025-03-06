@@ -1,5 +1,4 @@
-
-import { Tooth, Smile, Star, Heart, X, FileText } from "lucide-react";
+import { User, Smile, Star, Heart, X, FileText } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function ServicesSection() {
@@ -42,7 +41,7 @@ const services = [
     title: "General Dentistry",
     shortDescription: "Comprehensive care for all ages",
     description: "Regular check-ups, cleanings, fillings, and preventive care to maintain your oral health and catch issues early.",
-    icon: <Tooth size={28} />
+    icon: <User size={28} />
   },
   {
     title: "Cosmetic Dentistry",
