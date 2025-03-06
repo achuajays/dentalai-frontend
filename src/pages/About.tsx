@@ -145,7 +145,7 @@ const About = () => {
                 <Link to="/signup">Get Started Today</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full border-white text-white hover:bg-white hover:text-blue-700">
-                <Link to="/ai-tools" className="make text color black ">Explore Our Solutions</Link>
+                <Link to="/ai-tools" className="make text color black  background black\n">Explore Our Solutions</Link>
               </Button>
             </div>
           </section>
