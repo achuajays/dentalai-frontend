@@ -4,6 +4,14 @@ import { useToast } from "@/hooks/use-toast";
 
 type MessageType = "local" | "remote";
 
+interface SoapNote {
+  subjective: string;
+  objective: string;
+  assessment: string;
+  plan: string;
+  summary: string;
+}
+
 export default function useAudioRecording() {
   const [status, setStatus] = useState<string>("Ready to connect");
   const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -188,36 +196,75 @@ export default function useAudioRecording() {
     setIsPaused(false);
   };
 
-  const saveTranscript = () => {
+  const generateSoapNote = async () => {
     if (transcript.length === 0) {
       toast({
-        title: "Nothing to save",
+        title: "Nothing to generate",
         description: "Start recording to create a transcript first.",
         variant: "destructive"
       });
       return;
     }
 
-    // Convert transcript to text
-    const textContent = transcript
-      .map(line => `[${line.timestamp}] ${line.type === 'local' ? 'You' : 'Patient'}: ${line.text}`)
-      .join('\n');
+    try {
+      // Convert transcript to text
+      const patientInfo = transcript
+        .map(line => line.text)
+        .join(" ");
+      
+      const url = `https://dentalai-production.up.railway.app/soap/generate?patient_id=1&patient_info=${encodeURIComponent(patientInfo)}`;
+      
+      toast({
+        title: "Generating SOAP Note",
+        description: "Please wait while we generate your SOAP note...",
+      });
+      
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to generate SOAP note');
+      }
+      
+      const result = await response.json();
+      const soapNote: SoapNote = result.data.soap_note;
+      
+      // Display SOAP note
+      displaySoapNote(soapNote);
+      
+      toast({
+        title: "SOAP Note Generated",
+        description: "Your SOAP note has been successfully generated.",
+      });
+    } catch (error) {
+      console.error('Error generating SOAP note:', error);
+      toast({
+        title: "Generation Failed",
+        description: "Failed to generate SOAP note. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+  
+  const displaySoapNote = (soapNote: SoapNote) => {
+    // Replace transcript with SOAP note in a formatted way
+    const formattedNote: TranscriptLine[] = [
+      { text: `Subjective: ${soapNote.subjective}`, type: 'local', timestamp: formatTime() },
+      { text: `Objective: ${soapNote.objective}`, type: 'local', timestamp: formatTime() },
+      { text: `Assessment: ${soapNote.assessment}`, type: 'local', timestamp: formatTime() },
+      { text: `Plan: ${soapNote.plan}`, type: 'local', timestamp: formatTime() },
+      { text: `Summary: ${soapNote.summary}`, type: 'local', timestamp: formatTime() }
+    ];
     
-    // Create downloadable file
-    const blob = new Blob([textContent], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `transcript-${new Date().toISOString().slice(0, 10)}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    
-    toast({
-      title: "Transcript Saved",
-      description: "Your transcript has been downloaded as a text file.",
-    });
+    setTranscript(formattedNote);
+  };
+
+  const saveTranscript = () => {
+    generateSoapNote();
   };
 
   const clearTranscript = () => {
