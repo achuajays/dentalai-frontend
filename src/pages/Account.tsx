@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -34,7 +33,6 @@ const Account = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [confirmLogout, setConfirmLogout] = useState(false);
   
-  // Start with null values for all fields
   const [userProfile, setUserProfile] = useState<UserProfile>({
     firstName: null,
     lastName: null,
@@ -50,10 +48,19 @@ const Account = () => {
     medications: null
   });
 
-  // For editing the profile
   const [editedProfile, setEditedProfile] = useState<UserProfile>(userProfile);
 
-  // If not logged in, redirect to login
+  useEffect(() => {
+    if (userId) {
+      const savedProfile = localStorage.getItem(`userProfile_${userId}`);
+      if (savedProfile) {
+        const parsedProfile = JSON.parse(savedProfile);
+        setUserProfile(parsedProfile);
+        setEditedProfile(parsedProfile);
+      }
+    }
+  }, [userId]);
+
   if (!isLoggedIn) {
     navigate("/login");
     return null;
@@ -61,8 +68,10 @@ const Account = () => {
 
   const handleEditToggle = () => {
     if (isEditing) {
-      // Save changes
       setUserProfile(editedProfile);
+      if (userId) {
+        localStorage.setItem(`userProfile_${userId}`, JSON.stringify(editedProfile));
+      }
       toast({
         title: "Profile updated",
         description: "Your profile information has been saved.",
@@ -432,7 +441,6 @@ const Account = () => {
         </Tabs>
       </div>
 
-      {/* Logout confirmation dialog */}
       <Dialog open={confirmLogout} onOpenChange={setConfirmLogout}>
         <DialogContent>
           <DialogHeader>
