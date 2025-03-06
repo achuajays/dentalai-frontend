@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
 import AIScribe from "./pages/AIScribe";
 import Appointments from "./pages/Appointments";
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/account" element={<Account />} />
           <Route path="/ai-scribe" element={<AIScribe />} />
           <Route path="/appointments" element={<Appointments />} />
           <Route path="/ai-tools" element={<AITools />} />
