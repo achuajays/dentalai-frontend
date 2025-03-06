@@ -340,29 +340,10 @@ const AIScribe = () => {
               
               <div className="bg-gray-50 rounded-lg p-4 min-h-[300px] max-h-[400px] overflow-y-auto border border-gray-200">
                 {transcript.length > 0 ? (
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     {transcript.map((line, index) => (
-                      <div 
-                        key={index} 
-                        className={`flex items-start ${
-                          line.type === 'local' ? 'justify-end' : 'justify-start'
-                        }`}
-                      >
-                        <div 
-                          className={`max-w-[80%] px-4 py-2 rounded-lg shadow-sm ${
-                            line.type === 'local' 
-                              ? 'bg-blue-100 text-blue-800' 
-                              : 'bg-gray-100 text-gray-800'
-                          }`}
-                        >
-                          <div className="flex justify-between items-center mb-1">
-                            <span className="text-xs font-medium">
-                              {line.type === 'local' ? 'You' : 'Patient'}
-                            </span>
-                            <span className="text-xs text-gray-500">{line.timestamp}</span>
-                          </div>
-                          <p>{line.text}</p>
-                        </div>
+                      <div key={index} className="text-gray-800">
+                        <span className="text-xs text-gray-500">[{line.timestamp}]</span> {line.text}
                       </div>
                     ))}
                   </div>
@@ -379,7 +360,7 @@ const AIScribe = () => {
             <div className="w-full text-center text-sm text-gray-500">
               <p>
                 For best results, speak clearly and ensure you are in a quiet environment.
-                The AI will automatically differentiate between speakers.
+                The AI will automatically transcribe your conversation.
               </p>
             </div>
           </CardFooter>
