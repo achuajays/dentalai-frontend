@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 
 interface SaveForLaterProps {
   text: string;
-  type: "Xray" | "Scan";
+  type: "Xray" | "Scan" | "Report";
   disabled?: boolean;
 }
 

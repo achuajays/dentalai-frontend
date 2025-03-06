@@ -59,7 +59,7 @@ export function ReportResultsCard({ analysisResult }: ReportResultsCardProps) {
               <div className="flex justify-end">
                 <SaveForLater 
                   text={analysisResult.metadata.summary}
-                  type="Xray"
+                  type="Report"
                 />
               </div>
             </div>
