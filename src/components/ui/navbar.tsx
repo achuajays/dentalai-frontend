@@ -32,6 +32,13 @@ export function Navbar() {
     navigate("/");
   };
 
+  const navigateTo = (path: string) => {
+    navigate(path);
+    if (isMobile) {
+      setIsMenuOpen(false);
+    }
+  };
+
   return (
     <header className="w-full bg-white py-4 px-6 md:px-10 shadow-sm fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -51,34 +58,34 @@ export function Navbar() {
                   <NavigationMenu className="w-full">
                     <NavigationMenuList className="flex flex-col w-full space-y-2">
                       <NavigationMenuItem className="w-full">
-                        <Link to="/ai-scribe" className="w-full block p-2 hover:bg-blue-50 rounded">
+                        <div onClick={() => navigateTo("/ai-scribe")} className="w-full block p-2 hover:bg-blue-50 rounded cursor-pointer">
                           AI Scribe
-                        </Link>
+                        </div>
                       </NavigationMenuItem>
                       <NavigationMenuItem className="w-full">
-                        <Link to="/ai-tools" className="w-full block p-2 hover:bg-blue-50 rounded">
+                        <div onClick={() => navigateTo("/ai-tools")} className="w-full block p-2 hover:bg-blue-50 rounded cursor-pointer">
                           AI Tools
-                        </Link>
+                        </div>
                       </NavigationMenuItem>
                       <NavigationMenuItem className="w-full">
-                        <Link to="/appointments" className="w-full block p-2 hover:bg-blue-50 rounded">
+                        <div onClick={() => navigateTo("/appointments")} className="w-full block p-2 hover:bg-blue-50 rounded cursor-pointer">
                           Appointments
-                        </Link>
+                        </div>
                       </NavigationMenuItem>
                       <NavigationMenuItem className="w-full">
-                        <Link to="/integrations" className="w-full block p-2 hover:bg-blue-50 rounded">
+                        <div onClick={() => navigateTo("/integrations")} className="w-full block p-2 hover:bg-blue-50 rounded cursor-pointer">
                           Integrations
-                        </Link>
+                        </div>
                       </NavigationMenuItem>
                       <NavigationMenuItem className="w-full">
-                        <Link to="/about" className="w-full block p-2 hover:bg-blue-50 rounded">
+                        <div onClick={() => navigateTo("/about")} className="w-full block p-2 hover:bg-blue-50 rounded cursor-pointer">
                           About
-                        </Link>
+                        </div>
                       </NavigationMenuItem>
                       <NavigationMenuItem className="w-full">
-                        <Link to="/account" className="w-full block p-2 hover:bg-blue-50 rounded">
+                        <div onClick={() => navigateTo("/account")} className="w-full block p-2 hover:bg-blue-50 rounded cursor-pointer">
                           Account
-                        </Link>
+                        </div>
                       </NavigationMenuItem>
                       <NavigationMenuItem className="w-full">
                         <Button 
@@ -112,34 +119,34 @@ export function Navbar() {
               <NavigationMenu>
                 <NavigationMenuList className="flex space-x-6">
                   <NavigationMenuItem>
-                    <Link to="/ai-scribe" className="text-gray-700 hover:text-blue-600 transition-colors">
+                    <div onClick={() => navigateTo("/ai-scribe")} className="text-gray-700 hover:text-blue-600 transition-colors cursor-pointer">
                       AI Scribe
-                    </Link>
+                    </div>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                    <Link to="/ai-tools" className="text-gray-700 hover:text-blue-600 transition-colors">
+                    <div onClick={() => navigateTo("/ai-tools")} className="text-gray-700 hover:text-blue-600 transition-colors cursor-pointer">
                       AI Tools
-                    </Link>
+                    </div>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                    <Link to="/appointments" className="text-gray-700 hover:text-blue-600 transition-colors">
+                    <div onClick={() => navigateTo("/appointments")} className="text-gray-700 hover:text-blue-600 transition-colors cursor-pointer">
                       Appointments
-                    </Link>
+                    </div>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                    <Link to="/integrations" className="text-gray-700 hover:text-blue-600 transition-colors">
+                    <div onClick={() => navigateTo("/integrations")} className="text-gray-700 hover:text-blue-600 transition-colors cursor-pointer">
                       Integrations
-                    </Link>
+                    </div>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                    <Link to="/about" className="text-gray-700 hover:text-blue-600 transition-colors">
+                    <div onClick={() => navigateTo("/about")} className="text-gray-700 hover:text-blue-600 transition-colors cursor-pointer">
                       About
-                    </Link>
+                    </div>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                    <Link to="/account" className="text-gray-700 hover:text-blue-600 transition-colors">
+                    <div onClick={() => navigateTo("/account")} className="text-gray-700 hover:text-blue-600 transition-colors cursor-pointer">
                       Account
-                    </Link>
+                    </div>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
                     <Button onClick={handleLogout} variant="outline">Logout</Button>
