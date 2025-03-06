@@ -13,18 +13,18 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { User, Mail, MapPin, Phone, Building, Calendar, Save, Edit, LogOut } from "lucide-react";
 
 type UserProfile = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  dateOfBirth: string;
-  medicalHistory: string;
-  allergies: string;
-  medications: string;
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+  phone: string | null;
+  address: string | null;
+  city: string | null;
+  state: string | null;
+  zipCode: string | null;
+  dateOfBirth: string | null;
+  medicalHistory: string | null;
+  allergies: string | null;
+  medications: string | null;
 };
 
 const Account = () => {
@@ -34,20 +34,20 @@ const Account = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [confirmLogout, setConfirmLogout] = useState(false);
   
-  // Mock user data - in a real app, this would come from an API
+  // Start with null values for all fields
   const [userProfile, setUserProfile] = useState<UserProfile>({
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    phone: "(555) 123-4567",
-    address: "123 Main Street",
-    city: "San Francisco",
-    state: "CA",
-    zipCode: "94105",
-    dateOfBirth: "1985-06-15",
-    medicalHistory: "No significant medical history",
-    allergies: "Penicillin",
-    medications: "None"
+    firstName: null,
+    lastName: null,
+    email: null,
+    phone: null,
+    address: null,
+    city: null,
+    state: null,
+    zipCode: null,
+    dateOfBirth: null,
+    medicalHistory: null,
+    allergies: null,
+    medications: null
   });
 
   // For editing the profile
@@ -152,11 +152,12 @@ const Account = () => {
                       <Input 
                         id="firstName" 
                         name="firstName" 
-                        value={editedProfile.firstName} 
+                        value={editedProfile.firstName || ''} 
                         onChange={handleInputChange} 
+                        placeholder="Enter your first name"
                       />
                     ) : (
-                      <div className="p-2 bg-gray-50 rounded-md">{userProfile.firstName}</div>
+                      <div className="p-2 bg-gray-50 rounded-md">{userProfile.firstName || 'Not provided'}</div>
                     )}
                   </div>
 
@@ -169,11 +170,12 @@ const Account = () => {
                       <Input 
                         id="lastName" 
                         name="lastName" 
-                        value={editedProfile.lastName} 
+                        value={editedProfile.lastName || ''} 
                         onChange={handleInputChange} 
+                        placeholder="Enter your last name"
                       />
                     ) : (
-                      <div className="p-2 bg-gray-50 rounded-md">{userProfile.lastName}</div>
+                      <div className="p-2 bg-gray-50 rounded-md">{userProfile.lastName || 'Not provided'}</div>
                     )}
                   </div>
 
@@ -187,11 +189,12 @@ const Account = () => {
                         id="email" 
                         name="email" 
                         type="email" 
-                        value={editedProfile.email} 
+                        value={editedProfile.email || ''} 
                         onChange={handleInputChange} 
+                        placeholder="Enter your email address"
                       />
                     ) : (
-                      <div className="p-2 bg-gray-50 rounded-md">{userProfile.email}</div>
+                      <div className="p-2 bg-gray-50 rounded-md">{userProfile.email || 'Not provided'}</div>
                     )}
                   </div>
 
@@ -204,11 +207,12 @@ const Account = () => {
                       <Input 
                         id="phone" 
                         name="phone" 
-                        value={editedProfile.phone} 
+                        value={editedProfile.phone || ''} 
                         onChange={handleInputChange} 
+                        placeholder="Enter your phone number"
                       />
                     ) : (
-                      <div className="p-2 bg-gray-50 rounded-md">{userProfile.phone}</div>
+                      <div className="p-2 bg-gray-50 rounded-md">{userProfile.phone || 'Not provided'}</div>
                     )}
                   </div>
 
@@ -222,11 +226,11 @@ const Account = () => {
                         id="dateOfBirth" 
                         name="dateOfBirth" 
                         type="date" 
-                        value={editedProfile.dateOfBirth} 
+                        value={editedProfile.dateOfBirth || ''} 
                         onChange={handleInputChange} 
                       />
                     ) : (
-                      <div className="p-2 bg-gray-50 rounded-md">{userProfile.dateOfBirth}</div>
+                      <div className="p-2 bg-gray-50 rounded-md">{userProfile.dateOfBirth || 'Not provided'}</div>
                     )}
                   </div>
                 </div>
@@ -243,11 +247,12 @@ const Account = () => {
                         <Input 
                           id="address" 
                           name="address" 
-                          value={editedProfile.address} 
+                          value={editedProfile.address || ''} 
                           onChange={handleInputChange} 
+                          placeholder="Enter your street address"
                         />
                       ) : (
-                        <div className="p-2 bg-gray-50 rounded-md">{userProfile.address}</div>
+                        <div className="p-2 bg-gray-50 rounded-md">{userProfile.address || 'Not provided'}</div>
                       )}
                     </div>
 
@@ -260,11 +265,12 @@ const Account = () => {
                         <Input 
                           id="city" 
                           name="city" 
-                          value={editedProfile.city} 
+                          value={editedProfile.city || ''} 
                           onChange={handleInputChange} 
+                          placeholder="Enter your city"
                         />
                       ) : (
-                        <div className="p-2 bg-gray-50 rounded-md">{userProfile.city}</div>
+                        <div className="p-2 bg-gray-50 rounded-md">{userProfile.city || 'Not provided'}</div>
                       )}
                     </div>
 
@@ -274,11 +280,12 @@ const Account = () => {
                         <Input 
                           id="state" 
                           name="state" 
-                          value={editedProfile.state} 
+                          value={editedProfile.state || ''} 
                           onChange={handleInputChange} 
+                          placeholder="Enter your state"
                         />
                       ) : (
-                        <div className="p-2 bg-gray-50 rounded-md">{userProfile.state}</div>
+                        <div className="p-2 bg-gray-50 rounded-md">{userProfile.state || 'Not provided'}</div>
                       )}
                     </div>
 
@@ -288,11 +295,12 @@ const Account = () => {
                         <Input 
                           id="zipCode" 
                           name="zipCode" 
-                          value={editedProfile.zipCode} 
+                          value={editedProfile.zipCode || ''} 
                           onChange={handleInputChange} 
+                          placeholder="Enter your zip code"
                         />
                       ) : (
-                        <div className="p-2 bg-gray-50 rounded-md">{userProfile.zipCode}</div>
+                        <div className="p-2 bg-gray-50 rounded-md">{userProfile.zipCode || 'Not provided'}</div>
                       )}
                     </div>
                   </div>
@@ -337,11 +345,14 @@ const Account = () => {
                         id="medicalHistory" 
                         name="medicalHistory" 
                         rows={4} 
-                        value={editedProfile.medicalHistory} 
+                        value={editedProfile.medicalHistory || ''} 
                         onChange={handleInputChange} 
+                        placeholder="Enter your medical history"
                       />
                     ) : (
-                      <div className="p-3 bg-gray-50 rounded-md min-h-[100px]">{userProfile.medicalHistory}</div>
+                      <div className="p-3 bg-gray-50 rounded-md min-h-[100px]">
+                        {userProfile.medicalHistory || 'No medical history provided'}
+                      </div>
                     )}
                   </div>
 
@@ -352,11 +363,14 @@ const Account = () => {
                         id="allergies" 
                         name="allergies" 
                         rows={3} 
-                        value={editedProfile.allergies} 
+                        value={editedProfile.allergies || ''} 
                         onChange={handleInputChange} 
+                        placeholder="Enter any allergies"
                       />
                     ) : (
-                      <div className="p-3 bg-gray-50 rounded-md min-h-[80px]">{userProfile.allergies}</div>
+                      <div className="p-3 bg-gray-50 rounded-md min-h-[80px]">
+                        {userProfile.allergies || 'No allergies provided'}
+                      </div>
                     )}
                   </div>
 
@@ -367,11 +381,14 @@ const Account = () => {
                         id="medications" 
                         name="medications" 
                         rows={3} 
-                        value={editedProfile.medications} 
+                        value={editedProfile.medications || ''} 
                         onChange={handleInputChange} 
+                        placeholder="Enter current medications"
                       />
                     ) : (
-                      <div className="p-3 bg-gray-50 rounded-md min-h-[80px]">{userProfile.medications}</div>
+                      <div className="p-3 bg-gray-50 rounded-md min-h-[80px]">
+                        {userProfile.medications || 'No medications provided'}
+                      </div>
                     )}
                   </div>
                 </div>
