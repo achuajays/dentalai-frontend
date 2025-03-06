@@ -1,8 +1,8 @@
 
-import { useState } from "react";
 import { Navbar } from "@/components/ui/navbar";
 import { Footer } from "@/components/Footer";
 import { XrayAnalysisSection } from "@/components/XrayAnalysisSection";
+import { BackButton } from "@/components/BackButton";
 
 export default function AIXray() {
   return (
@@ -10,6 +10,7 @@ export default function AIXray() {
       <Navbar />
       <main className="flex-grow pt-16">
         <div className="container mx-auto px-4 py-12">
+          <BackButton />
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h1 className="text-3xl md:text-4xl font-bold text-blue-700 mb-4">
               AI X-ray Analysis
