@@ -18,16 +18,18 @@ const Appointments: React.FC = () => {
   const { data: appointments, isLoading, error } = useQuery({
     queryKey: ['appointments'],
     queryFn: fetchAppointments,
-    onSuccess: () => {
-      console.log("Appointments loaded successfully");
-    },
-    meta: {
-      onError: () => {
+    gcTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 2 * 60 * 1000, // 2 minutes
+    onSettled: (_data, error) => {
+      if (error) {
+        console.error("Error loading appointments:", error);
         toast({
           title: "Error",
           description: "Failed to load appointments. Please try again later.",
           variant: "destructive",
         });
+      } else {
+        console.log("Appointments loaded successfully");
       }
     }
   });
