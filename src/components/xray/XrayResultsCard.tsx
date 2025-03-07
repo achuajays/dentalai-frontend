@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileImage, Save, Pencil } from "lucide-react";
@@ -9,9 +10,10 @@ import ReactMarkdown from 'react-markdown';
 
 interface XrayResultsCardProps {
   analysisResult: { filename: string; analysis: string } | null;
+  onAnalysisUpdate?: (updatedAnalysis: string) => void;
 }
 
-export function XrayResultsCard({ analysisResult }: XrayResultsCardProps) {
+export function XrayResultsCard({ analysisResult, onAnalysisUpdate }: XrayResultsCardProps) {
   const [editMode, setEditMode] = useState(false);
   const [editedAnalysis, setEditedAnalysis] = useState("");
   const { toast } = useToast();
@@ -25,6 +27,12 @@ export function XrayResultsCard({ analysisResult }: XrayResultsCardProps) {
 
   const handleSaveEdit = () => {
     setEditMode(false);
+    
+    // Call the callback to update parent state
+    if (onAnalysisUpdate && analysisResult) {
+      onAnalysisUpdate(editedAnalysis);
+    }
+    
     toast({
       title: "Changes saved",
       description: "Your edits to the analysis have been saved.",

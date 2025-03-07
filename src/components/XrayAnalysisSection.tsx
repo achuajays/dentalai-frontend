@@ -15,13 +15,25 @@ export function XrayAnalysisSection() {
     setAnalysisResult(result);
   };
 
+  const handleAnalysisUpdate = (updatedAnalysis: string) => {
+    if (analysisResult) {
+      setAnalysisResult({
+        ...analysisResult,
+        analysis: updatedAnalysis
+      });
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in">
       {/* Upload Section */}
       <XrayUploadCard onAnalysisComplete={handleAnalysisComplete} />
       
       {/* Results Section */}
-      <XrayResultsCard analysisResult={analysisResult} />
+      <XrayResultsCard 
+        analysisResult={analysisResult} 
+        onAnalysisUpdate={handleAnalysisUpdate}
+      />
     </div>
   );
 }
