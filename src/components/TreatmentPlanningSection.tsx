@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ClipboardCheck, Loader2, FilePlus2, FileText, Pencil, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from 'react-markdown';
-import { jsPDF } from "jspdf";
+import { exportTreatmentPlanToPdf } from "@/utils/treatmentPlanExportService";
 
 interface TreatmentPlanResponse {
   condition: string;
@@ -89,42 +89,8 @@ export function TreatmentPlanningSection() {
   };
 
   const exportToPdf = () => {
-    if (!treatmentPlan) return;
-    
-    try {
-      const doc = new jsPDF();
-      const pageWidth = doc.internal.pageSize.getWidth();
-      
-      doc.setFontSize(18);
-      doc.setTextColor(0, 100, 0);
-      doc.text("Treatment Plan", pageWidth / 2, 20, { align: "center" });
-      
-      doc.setFontSize(14);
-      doc.setTextColor(0, 0, 0);
-      doc.text(`Condition: ${treatmentPlan.condition}`, 20, 40);
-      
-      doc.setFontSize(10);
-      doc.setTextColor(100, 100, 100);
-      doc.text(`Generated on: ${new Date(treatmentPlan.generated_at).toLocaleString()}`, 20, 50);
-      
-      doc.setFontSize(12);
-      doc.setTextColor(0, 0, 0);
-      const splitText = doc.splitTextToSize(treatmentPlan.treatment_plan, pageWidth - 40);
-      doc.text(splitText, 20, 70);
-      
-      doc.save("Treatment_Plan.pdf");
-      
-      toast({
-        title: "PDF Exported",
-        description: "Your treatment plan has been successfully exported as a PDF.",
-      });
-    } catch (error) {
-      console.error("Error exporting PDF:", error);
-      toast({
-        title: "Export Failed",
-        description: "Failed to export the treatment plan as PDF. Please try again.",
-        variant: "destructive"
-      });
+    if (treatmentPlan) {
+      exportTreatmentPlanToPdf(treatmentPlan);
     }
   };
 
