@@ -1,11 +1,8 @@
-
 import React from "react";
 import { MessageSquare, Users, QrCode, ExternalLink, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 export const CommunityPlatforms: React.FC = () => {
-  return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl mb-16 p-8 md:p-12">
+  return <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl mb-16 p-8 md:p-12">
       <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Connect with Our AI Dental Communities</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Telegram Bot */}
@@ -20,15 +17,11 @@ export const CommunityPlatforms: React.FC = () => {
           </p>
           <div className="flex flex-col items-center">
             <div className="border border-gray-200 p-3 rounded-lg mb-4 bg-white">
-              <img 
-                src="/lovable-uploads/4ba67f77-f50a-44b9-8c92-af7a1bf3e4b7.png" 
-                alt="Telegram Bot QR Code" 
-                className="w-48 h-48 object-contain"
-              />
+              <img src="/lovable-uploads/4ba67f77-f50a-44b9-8c92-af7a1bf3e4b7.png" alt="Telegram Bot QR Code" className="w-48 h-48 object-contain" />
             </div>
             <Button className="flex items-center gap-2 rounded-full bg-blue-500 hover:bg-blue-600">
               <QrCode size={16} />
-              <span>Open Discord Bot</span>
+              <span>Open Telegram Bot</span>
               <ExternalLink size={16} />
             </Button>
           </div>
@@ -46,15 +39,11 @@ export const CommunityPlatforms: React.FC = () => {
           </p>
           <div className="flex flex-col items-center">
             <div className="border border-gray-200 p-3 rounded-lg mb-4 bg-white">
-              <img 
-                src="/lovable-uploads/cf3c7f6e-bfe0-46ca-8e11-e76d6c33a884.png" 
-                alt="Discord Community QR Code" 
-                className="w-48 h-48 object-contain"
-              />
+              <img src="/lovable-uploads/cf3c7f6e-bfe0-46ca-8e11-e76d6c33a884.png" alt="Discord Community QR Code" className="w-48 h-48 object-contain" />
             </div>
             <Button className="flex items-center gap-2 rounded-full bg-indigo-500 hover:bg-indigo-600">
               <QrCode size={16} />
-              <span>Join Telegram Community</span>
+              <span>Join Discord  Community</span>
               <ExternalLink size={16} />
             </Button>
           </div>
@@ -87,6 +76,5 @@ export const CommunityPlatforms: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
