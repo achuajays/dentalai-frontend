@@ -1,4 +1,6 @@
 
+import React from "react";
+
 export function TeamSection() {
   return (
     <section className="py-16 bg-gray-50">
@@ -14,12 +16,20 @@ export function TeamSection() {
           {team.map((member, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all hover-scale"
+              className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all hover:scale-105"
             >
-              <div className="h-64 bg-blue-100 flex items-center justify-center">
-                <div className="w-24 h-24 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 text-3xl font-semibold">
-                  {member.name.split(' ').map(n => n[0]).join('')}
-                </div>
+              <div className="h-64 bg-gray-100 flex items-center justify-center overflow-hidden">
+                {member.image ? (
+                  <img 
+                    src={member.image} 
+                    alt={member.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-24 h-24 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 text-3xl font-semibold">
+                    {member.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                )}
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-1 text-gray-900">{member.name}</h3>
@@ -38,7 +48,8 @@ const team = [
   {
     name: "Dr. Jennifer Reynolds",
     role: "Lead Dentist",
-    bio: "Dr. Reynolds has over 15 years of experience in general and cosmetic dentistry. She specializes in creating beautiful, functional smiles using the latest techniques."
+    bio: "Dr. Reynolds has over 15 years of experience in general and cosmetic dentistry. She specializes in creating beautiful, functional smiles using the latest techniques.",
+    image: "/lovable-uploads/bbdfbe8c-8334-44d2-9ba5-20abf1137ad3.png"
   },
   {
     name: "Dr. Marcus Chen",
@@ -48,17 +59,20 @@ const team = [
   {
     name: "Dr. Sophia Patel",
     role: "Pediatric Dentist",
-    bio: "Dr. Patel loves working with children and has a special talent for making dental visits fun and stress-free for our youngest patients."
+    bio: "Dr. Patel loves working with children and has a special talent for making dental visits fun and stress-free for our youngest patients.",
+    image: "/lovable-uploads/5a95a2fa-d07a-4b92-b246-8be7e64ab925.png"
   },
   {
     name: "Emma Wilson",
     role: "Dental Hygienist",
-    bio: "Emma is passionate about preventive care and patient education. She ensures each cleaning is thorough while keeping patients comfortable."
+    bio: "Emma is passionate about preventive care and patient education. She ensures each cleaning is thorough while keeping patients comfortable.",
+    image: "/lovable-uploads/f19b7f71-9bc3-4e24-9348-44da580b63c7.png"
   },
   {
     name: "Sarah Johnson",
     role: "Office Manager",
-    bio: "Sarah keeps our practice running smoothly and is dedicated to helping patients with scheduling, insurance questions, and financial arrangements."
+    bio: "Sarah keeps our practice running smoothly and is dedicated to helping patients with scheduling, insurance questions, and financial arrangements.",
+    image: "/lovable-uploads/3f5fb046-7004-44cd-af6a-f148435b5782.png"
   },
   {
     name: "Michael Rodriguez",
