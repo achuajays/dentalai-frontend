@@ -1,7 +1,6 @@
 
 import { MapPin, Phone, Clock, AlertTriangle, CreditCard } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import InteractiveMap from "@/components/ui/InteractiveMap";
 
 export function ContactSection() {
   return (
@@ -92,12 +91,14 @@ export function ContactSection() {
             </div>
           </div>
 
-          <div className="order-1 lg:order-2 rounded-lg overflow-hidden shadow-md h-[400px]">
-            <InteractiveMap 
-              center={[-122.4194, 37.7749]} 
-              zoom={15} 
-              address="123 Dental Way, Suite 100, San Francisco, CA 94110" 
-            />
+          <div className="order-1 lg:order-2 bg-gray-200 min-h-[400px] rounded-lg flex items-center justify-center">
+            <div className="text-center p-6">
+              <MapPin size={48} className="mx-auto mb-4 text-blue-600" />
+              <h3 className="text-xl font-semibold mb-2">Our Location</h3>
+              <p className="text-gray-700 mb-2">123 Dental Way, Suite 100</p>
+              <p className="text-gray-700 mb-4">San Francisco, CA 94110</p>
+              <p className="text-sm text-gray-600">Map placeholder - In a real implementation, this would be an interactive Google Map or similar.</p>
+            </div>
           </div>
         </div>
       </div>
