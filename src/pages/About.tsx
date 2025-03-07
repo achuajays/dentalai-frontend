@@ -9,6 +9,7 @@ import { CommunityPlatforms } from "@/components/About/CommunityPlatforms";
 import { TechnologyFeatures } from "@/components/About/TechnologyFeatures";
 import { CompanyStats } from "@/components/About/CompanyStats";
 import { CTASection } from "@/components/About/CTASection";
+import { TeamSection } from "@/components/TeamSection";
 
 const About = () => {
   return (
@@ -24,6 +25,9 @@ const About = () => {
 
           {/* Core Values */}
           <CoreValues />
+
+          {/* Team Section */}
+          <TeamSection />
 
           {/* Community Platforms Section */}
           <CommunityPlatforms />
