@@ -1,26 +1,13 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, Code } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/ui/code-block";
-
-interface Parameter {
-  name: string;
-  type: string;
-  required: boolean;
-  description: string;
-}
+import { Endpoint } from "@/data/api-endpoints";
 
 interface EndpointProps {
-  endpoint: {
-    id: string;
-    method: string;
-    path: string;
-    description: string;
-    responseExample: string;
-    parameters: Parameter[];
-  };
+  endpoint: Endpoint;
 }
 
 export function APIEndpoint({ endpoint }: EndpointProps) {
