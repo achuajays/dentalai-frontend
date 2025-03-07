@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ClipboardCheck, Loader2, FilePlus2, FilePdf, Pencil, Save } from "lucide-react";
+import { ClipboardCheck, Loader2, FilePlus2, FileText, Pencil, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from 'react-markdown';
 import { jsPDF } from "jspdf";
@@ -93,32 +92,26 @@ export function TreatmentPlanningSection() {
     if (!treatmentPlan) return;
     
     try {
-      // Create new jsPDF instance
       const doc = new jsPDF();
       const pageWidth = doc.internal.pageSize.getWidth();
       
-      // Add title
       doc.setFontSize(18);
       doc.setTextColor(0, 100, 0);
       doc.text("Treatment Plan", pageWidth / 2, 20, { align: "center" });
       
-      // Add condition
       doc.setFontSize(14);
       doc.setTextColor(0, 0, 0);
       doc.text(`Condition: ${treatmentPlan.condition}`, 20, 40);
       
-      // Add generated date
       doc.setFontSize(10);
       doc.setTextColor(100, 100, 100);
       doc.text(`Generated on: ${new Date(treatmentPlan.generated_at).toLocaleString()}`, 20, 50);
       
-      // Add treatment plan content
       doc.setFontSize(12);
       doc.setTextColor(0, 0, 0);
       const splitText = doc.splitTextToSize(treatmentPlan.treatment_plan, pageWidth - 40);
       doc.text(splitText, 20, 70);
       
-      // Save PDF
       doc.save("Treatment_Plan.pdf");
       
       toast({
@@ -137,7 +130,6 @@ export function TreatmentPlanningSection() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in">
-      {/* Input Section */}
       <Card className="overflow-hidden border-none shadow-lg">
         <div className="h-2 bg-gradient-to-r from-blue-500 to-blue-700"></div>
         <CardContent className="p-6">
@@ -184,7 +176,6 @@ export function TreatmentPlanningSection() {
         </CardContent>
       </Card>
       
-      {/* Results Section */}
       <Card className="overflow-hidden border-none shadow-lg">
         <div className="h-2 bg-gradient-to-r from-green-500 to-green-700"></div>
         <CardContent className="p-6">
@@ -220,7 +211,7 @@ export function TreatmentPlanningSection() {
                           onClick={exportToPdf}
                           className="border-green-300 hover:bg-green-50 hover:text-green-700 text-green-600"
                         >
-                          <FilePdf className="mr-2 h-4 w-4" />
+                          <FileText className="mr-2 h-4 w-4" />
                           Export PDF
                         </Button>
                       </>
