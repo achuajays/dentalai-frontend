@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, Code } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CodeBlock } from "@/components/ui/code-block";
 
 interface Parameter {
   name: string;
@@ -41,7 +42,7 @@ export function APIEndpoint({ endpoint }: EndpointProps) {
   };
 
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden">
+    <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
       <div 
         className="flex items-center justify-between p-4 bg-gray-50 cursor-pointer"
         onClick={() => setIsExpanded(!isExpanded)}
@@ -100,23 +101,22 @@ export function APIEndpoint({ endpoint }: EndpointProps) {
             </TabsContent>
             
             <TabsContent value="response">
-              <div className="bg-gray-800 text-gray-100 p-4 rounded font-mono text-sm whitespace-pre-wrap overflow-x-auto">
-                {endpoint.responseExample}
-              </div>
+              <CodeBlock code={endpoint.responseExample} language="json" />
             </TabsContent>
             
             <TabsContent value="example">
               <div className="space-y-4">
                 <h4 className="font-medium text-gray-700">cURL</h4>
-                <div className="bg-gray-800 text-gray-100 p-4 rounded font-mono text-sm overflow-x-auto">
-                  {`curl -X ${endpoint.method} https://dentalai-production.up.railway.app${endpoint.path} \\
+                <CodeBlock 
+                  code={`curl -X ${endpoint.method} https://dentalai-production.up.railway.app${endpoint.path} \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Accept: application/json"`}
-                </div>
+                  language="bash"
+                />
                 
                 <h4 className="font-medium text-gray-700">JavaScript</h4>
-                <div className="bg-gray-800 text-gray-100 p-4 rounded font-mono text-sm overflow-x-auto">
-                  {`const fetchData = async () => {
+                <CodeBlock 
+                  code={`const fetchData = async () => {
   const response = await fetch('https://dentalai-production.up.railway.app${endpoint.path}', {
     method: '${endpoint.method}',
     headers: {
@@ -127,7 +127,8 @@ export function APIEndpoint({ endpoint }: EndpointProps) {
   
   return await response.json();
 };`}
-                </div>
+                  language="javascript"
+                />
               </div>
             </TabsContent>
           </Tabs>

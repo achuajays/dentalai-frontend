@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { APIEndpoint } from "@/components/integration/APIEndpoint";
 import { Separator } from "@/components/ui/separator";
+import { CodeBlock } from "@/components/ui/code-block";
 
 export function APIDocumentation() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -145,9 +146,10 @@ export function APIDocumentation() {
               </p>
               
               <h4 className="text-lg font-semibold text-gray-800 mt-6">Base URL</h4>
-              <div className="bg-gray-800 text-gray-100 p-3 rounded font-mono text-sm">
-                https://dentalai-production.up.railway.app
-              </div>
+              <CodeBlock 
+                code="https://dentalai-production.up.railway.app"
+                className="my-4"
+              />
               
               <h4 className="text-lg font-semibold text-gray-800 mt-6">Rate Limits</h4>
               <p>
@@ -159,9 +161,10 @@ export function APIDocumentation() {
               <p>
                 The current version of the API is v1. We recommend specifying the version in the URL:
               </p>
-              <div className="bg-gray-800 text-gray-100 p-3 rounded font-mono text-sm">
-                https://dentalai-production.up.railway.app/v1/integration/...
-              </div>
+              <CodeBlock 
+                code="https://dentalai-production.up.railway.app/v1/integration/..."
+                className="my-4"
+              />
             </div>
           </TabsContent>
           
@@ -177,16 +180,19 @@ export function APIDocumentation() {
               <p>
                 Include your API key in the request header:
               </p>
-              <div className="bg-gray-800 text-gray-100 p-3 rounded font-mono text-sm">
-                Authorization: Bearer YOUR_API_KEY
-              </div>
+              <CodeBlock 
+                code="Authorization: Bearer YOUR_API_KEY"
+                className="my-4"
+              />
               
               <h4 className="text-lg font-semibold text-gray-800 mt-6">Example Request</h4>
-              <div className="bg-gray-800 text-gray-100 p-3 rounded font-mono text-sm">
-                curl -X GET https://dentalai-production.up.railway.app/integration/soap_notes \<br />
-                &nbsp;&nbsp;-H "Authorization: Bearer YOUR_API_KEY" \<br />
-                &nbsp;&nbsp;-H "Content-Type: application/json"
-              </div>
+              <CodeBlock 
+                code={`curl -X GET https://dentalai-production.up.railway.app/integration/soap_notes \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -H "Content-Type: application/json"`}
+                language="bash"
+                className="my-4"
+              />
             </div>
           </TabsContent>
           
@@ -211,9 +217,8 @@ export function APIDocumentation() {
               <h3 className="text-xl font-semibold text-gray-800">Integration Examples</h3>
               
               <h4 className="text-lg font-semibold text-gray-800 mt-6">JavaScript/Node.js Example</h4>
-              <div className="bg-gray-800 text-gray-100 p-3 rounded font-mono text-sm">
-                {`
-async function fetchSoapNotes() {
+              <CodeBlock 
+                code={`async function fetchSoapNotes() {
   const response = await fetch(
     'https://dentalai-production.up.railway.app/integration/soap_notes',
     {
@@ -226,14 +231,14 @@ async function fetchSoapNotes() {
   
   const data = await response.json();
   return data.soap_notes;
-}
-                `.trim()}
-              </div>
+}`}
+                language="javascript"
+                className="my-4"
+              />
               
               <h4 className="text-lg font-semibold text-gray-800 mt-6">Python Example</h4>
-              <div className="bg-gray-800 text-gray-100 p-3 rounded font-mono text-sm">
-                {`
-import requests
+              <CodeBlock 
+                code={`import requests
 
 def fetch_appointments(patient_id=None):
     url = 'https://dentalai-production.up.railway.app/integration/appointments'
@@ -248,17 +253,17 @@ def fetch_appointments(patient_id=None):
     }
     
     response = requests.get(url, headers=headers, params=params)
-    return response.json()['appointments']
-                `.trim()}
-              </div>
+    return response.json()['appointments']`}
+                language="python"
+                className="my-4"
+              />
               
               <h4 className="text-lg font-semibold text-gray-800 mt-6">Webhooks</h4>
               <p>
                 You can also set up webhooks to receive real-time notifications when new data is created or updated:
               </p>
-              <div className="bg-gray-800 text-gray-100 p-3 rounded font-mono text-sm">
-                {`
-// Example webhook payload for a new appointment
+              <CodeBlock 
+                code={`// Example webhook payload for a new appointment
 {
   "event": "appointment.created",
   "data": {
@@ -271,9 +276,10 @@ def fetch_appointments(patient_id=None):
     "status": "confirmed",
     "reason": "Root canal treatment"
   }
-}
-                `.trim()}
-              </div>
+}`}
+                language="json"
+                className="my-4"
+              />
             </div>
           </TabsContent>
         </Tabs>
