@@ -10,7 +10,7 @@ export function HeroSection() {
   
   return <section className="relative h-[600px] md:h-[700px] overflow-hidden">
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
-      backgroundImage: "url('https://trident.dental/wp-content/uploads/2022/06/pexels-cedric-fauntleroy-4269362.jpg.webp')",
+      backgroundImage: "url('https://images.unsplash.com/photo-1609840114035-3c981b782dfe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80')",
       filter: "brightness(0.8)"
     }}></div>
       <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 to-blue-700/30"></div>
