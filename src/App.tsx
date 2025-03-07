@@ -17,6 +17,7 @@ import AITreatment from "./pages/AITreatment";
 import AIImaging from "./pages/AIImaging";
 import AIReports from "./pages/AIReports";
 import AIExercise from "./pages/AIExercise";
+import AIDrugInfo from "./pages/AIDrugInfo";
 import Integration from "./pages/Integration";
 import About from "./pages/About";
 import { FloatingBot } from "./components/DoctorBot/FloatingBot";
@@ -42,6 +43,7 @@ const App = () => (
           <Route path="/ai-imaging" element={<AIImaging />} />
           <Route path="/ai-reports" element={<AIReports />} />
           <Route path="/ai-exercise" element={<AIExercise />} />
+          <Route path="/ai-drug-info" element={<AIDrugInfo />} />
           <Route path="/integrations" element={<Integration />} />
           <Route path="/about" element={<About />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

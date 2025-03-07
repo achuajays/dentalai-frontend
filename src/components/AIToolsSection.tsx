@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,7 +8,8 @@ import {
   BarChart3,
   Dumbbell,
   BookOpenText,
-  GraduationCap
+  GraduationCap,
+  Pill
 } from "lucide-react";
 
 export function AIToolsSection() {
@@ -48,6 +48,13 @@ export function AIToolsSection() {
       icon: <Dumbbell className="w-12 h-12 text-red-500" />,
       link: "/ai-exercise",
       color: "soft-peach"
+    },
+    {
+      title: "Drug Information",
+      description: "Access detailed information about medications including active ingredients, dosage forms, and manufacturer details.",
+      icon: <Pill className="w-12 h-12 text-teal-500" />,
+      link: "/ai-drug-info",
+      color: "soft-teal"
     }
   ];
 
