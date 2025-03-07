@@ -21,13 +21,28 @@ export function MedicalImagingSection() {
     setAnalysisResult(result);
   };
 
+  const handleAnalysisUpdate = (updatedAnalysis: string) => {
+    if (analysisResult) {
+      setAnalysisResult({
+        ...analysisResult,
+        metadata: {
+          ...analysisResult.metadata,
+          analysis: updatedAnalysis
+        }
+      });
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in">
       {/* Upload Section */}
       <ScanUploadCard onAnalysisComplete={handleAnalysisComplete} />
       
       {/* Results Section */}
-      <ScanResultsCard analysisResult={analysisResult} />
+      <ScanResultsCard 
+        analysisResult={analysisResult} 
+        onAnalysisUpdate={handleAnalysisUpdate}
+      />
     </div>
   );
 }

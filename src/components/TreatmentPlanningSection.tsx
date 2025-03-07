@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ClipboardCheck, Loader2, FilePlus2 } from "lucide-react";
+import { ClipboardCheck, Loader2, FilePlus2, FilePdf, Pencil, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from 'react-markdown';
+import { jsPDF } from "jspdf";
 
 interface TreatmentPlanResponse {
   condition: string;
@@ -18,6 +19,8 @@ export function TreatmentPlanningSection() {
   const [condition, setCondition] = useState("");
   const [treatmentPlan, setTreatmentPlan] = useState<TreatmentPlanResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [editedPlan, setEditedPlan] = useState("");
   const { toast } = useToast();
   
   const generateTreatmentPlan = async () => {
@@ -61,6 +64,74 @@ export function TreatmentPlanningSection() {
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleEditClick = () => {
+    if (treatmentPlan) {
+      setEditedPlan(treatmentPlan.treatment_plan);
+      setEditMode(true);
+    }
+  };
+
+  const handleSaveEdit = () => {
+    if (treatmentPlan) {
+      setTreatmentPlan({
+        ...treatmentPlan,
+        treatment_plan: editedPlan
+      });
+      setEditMode(false);
+      
+      toast({
+        title: "Changes saved",
+        description: "Your edits to the treatment plan have been saved.",
+      });
+    }
+  };
+
+  const exportToPdf = () => {
+    if (!treatmentPlan) return;
+    
+    try {
+      // Create new jsPDF instance
+      const doc = new jsPDF();
+      const pageWidth = doc.internal.pageSize.getWidth();
+      
+      // Add title
+      doc.setFontSize(18);
+      doc.setTextColor(0, 100, 0);
+      doc.text("Treatment Plan", pageWidth / 2, 20, { align: "center" });
+      
+      // Add condition
+      doc.setFontSize(14);
+      doc.setTextColor(0, 0, 0);
+      doc.text(`Condition: ${treatmentPlan.condition}`, 20, 40);
+      
+      // Add generated date
+      doc.setFontSize(10);
+      doc.setTextColor(100, 100, 100);
+      doc.text(`Generated on: ${new Date(treatmentPlan.generated_at).toLocaleString()}`, 20, 50);
+      
+      // Add treatment plan content
+      doc.setFontSize(12);
+      doc.setTextColor(0, 0, 0);
+      const splitText = doc.splitTextToSize(treatmentPlan.treatment_plan, pageWidth - 40);
+      doc.text(splitText, 20, 70);
+      
+      // Save PDF
+      doc.save("Treatment_Plan.pdf");
+      
+      toast({
+        title: "PDF Exported",
+        description: "Your treatment plan has been successfully exported as a PDF.",
+      });
+    } catch (error) {
+      console.error("Error exporting PDF:", error);
+      toast({
+        title: "Export Failed",
+        description: "Failed to export the treatment plan as PDF. Please try again.",
+        variant: "destructive"
+      });
     }
   };
 
@@ -127,17 +198,72 @@ export function TreatmentPlanningSection() {
           {treatmentPlan ? (
             <div className="bg-white rounded-lg">
               <div className="mb-4">
-                <h3 className="text-lg font-medium text-gray-800 mb-2">
-                  Plan for: {treatmentPlan.condition}
-                </h3>
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-lg font-medium text-gray-800">
+                    Plan for: {treatmentPlan.condition}
+                  </h3>
+                  <div className="flex space-x-2">
+                    {!editMode && (
+                      <>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          onClick={handleEditClick}
+                          className="border-green-300 hover:bg-green-50 hover:text-green-700 text-green-600"
+                        >
+                          <Pencil className="mr-2 h-4 w-4" />
+                          Edit Plan
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          onClick={exportToPdf}
+                          className="border-green-300 hover:bg-green-50 hover:text-green-700 text-green-600"
+                        >
+                          <FilePdf className="mr-2 h-4 w-4" />
+                          Export PDF
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                </div>
                 <p className="text-xs text-gray-500 mb-2">
                   Generated on: {new Date(treatmentPlan.generated_at).toLocaleString()}
                 </p>
-                <div className="bg-gray-50 p-4 rounded-lg max-h-[500px] overflow-y-auto">
-                  <ReactMarkdown className="text-sm prose prose-sm max-w-none prose-headings:text-green-800 prose-a:text-green-600 prose-li:marker:text-green-500">
-                    {treatmentPlan.treatment_plan}
-                  </ReactMarkdown>
-                </div>
+                
+                {editMode ? (
+                  <div className="bg-gray-50 rounded-lg">
+                    <Textarea
+                      value={editedPlan}
+                      onChange={(e) => setEditedPlan(e.target.value)}
+                      className="w-full h-[400px] p-4 border-0 text-sm text-gray-700 font-sans bg-gray-50 focus-visible:ring-green-500"
+                    />
+                    <div className="flex justify-end p-2 bg-gray-100">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => setEditMode(false)} 
+                        className="mr-2"
+                      >
+                        Cancel
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        onClick={handleSaveEdit}
+                        className="bg-green-600 hover:bg-green-700"
+                      >
+                        <Save className="mr-2 h-4 w-4" />
+                        Save Changes
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-gray-50 p-4 rounded-lg max-h-[500px] overflow-y-auto">
+                    <ReactMarkdown className="text-sm prose prose-sm max-w-none prose-headings:text-green-800 prose-a:text-green-600 prose-li:marker:text-green-500">
+                      {treatmentPlan.treatment_plan}
+                    </ReactMarkdown>
+                  </div>
+                )}
               </div>
             </div>
           ) : (

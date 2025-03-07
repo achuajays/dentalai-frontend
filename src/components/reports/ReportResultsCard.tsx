@@ -21,9 +21,10 @@ interface ReportAnalysisResponse {
 
 interface ReportResultsCardProps {
   analysisResult: ReportAnalysisResponse | null;
+  onSummaryUpdate?: (updatedSummary: string) => void;
 }
 
-export function ReportResultsCard({ analysisResult }: ReportResultsCardProps) {
+export function ReportResultsCard({ analysisResult, onSummaryUpdate }: ReportResultsCardProps) {
   const [editMode, setEditMode] = useState(false);
   const [editedSummary, setEditedSummary] = useState("");
   const { toast } = useToast();
@@ -37,6 +38,12 @@ export function ReportResultsCard({ analysisResult }: ReportResultsCardProps) {
 
   const handleSaveEdit = () => {
     setEditMode(false);
+    
+    // Call the callback to update parent state
+    if (onSummaryUpdate && analysisResult) {
+      onSummaryUpdate(editedSummary);
+    }
+    
     toast({
       title: "Changes saved",
       description: "Your edits to the report summary have been saved.",

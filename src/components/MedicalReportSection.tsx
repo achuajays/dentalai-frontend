@@ -21,13 +21,28 @@ export function MedicalReportSection() {
     setAnalysisResult(result);
   };
 
+  const handleSummaryUpdate = (updatedSummary: string) => {
+    if (analysisResult) {
+      setAnalysisResult({
+        ...analysisResult,
+        metadata: {
+          ...analysisResult.metadata,
+          summary: updatedSummary
+        }
+      });
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in">
       {/* Upload Section */}
       <ReportUploadCard onAnalysisComplete={handleAnalysisComplete} />
       
       {/* Results Section */}
-      <ReportResultsCard analysisResult={analysisResult} />
+      <ReportResultsCard 
+        analysisResult={analysisResult} 
+        onSummaryUpdate={handleSummaryUpdate}
+      />
     </div>
   );
 }

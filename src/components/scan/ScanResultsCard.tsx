@@ -21,9 +21,10 @@ interface ScanAnalysisResponse {
 
 interface ScanResultsCardProps {
   analysisResult: ScanAnalysisResponse | null;
+  onAnalysisUpdate?: (updatedAnalysis: string) => void;
 }
 
-export function ScanResultsCard({ analysisResult }: ScanResultsCardProps) {
+export function ScanResultsCard({ analysisResult, onAnalysisUpdate }: ScanResultsCardProps) {
   const [editMode, setEditMode] = useState(false);
   const [editedAnalysis, setEditedAnalysis] = useState("");
   const { toast } = useToast();
@@ -37,6 +38,12 @@ export function ScanResultsCard({ analysisResult }: ScanResultsCardProps) {
 
   const handleSaveEdit = () => {
     setEditMode(false);
+    
+    // Call the callback to update parent state
+    if (onAnalysisUpdate && analysisResult) {
+      onAnalysisUpdate(editedAnalysis);
+    }
+    
     toast({
       title: "Changes saved",
       description: "Your edits to the analysis have been saved.",
