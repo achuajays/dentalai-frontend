@@ -42,8 +42,13 @@ export function Navbar() {
   return (
     <header className="w-full bg-white py-4 px-6 md:px-10 shadow-sm fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold text-blue-600">
-          DentalCare+
+        <Link to="/" className="flex items-center gap-2">
+          <img 
+            src="/lovable-uploads/8cf8ad82-4f76-412f-944a-ae9a7a389a34.png" 
+            alt="DentalCare+ Logo" 
+            className="h-10 md:h-12"
+          />
+          <span className="text-2xl font-bold text-blue-600 hidden md:inline-block">DentalCare+</span>
         </Link>
 
         {isMobile ? (

@@ -8,7 +8,14 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-xl font-bold mb-4">DentalCare+</h3>
+            <div className="flex items-center gap-3 mb-4">
+              <img 
+                src="/lovable-uploads/8cf8ad82-4f76-412f-944a-ae9a7a389a34.png" 
+                alt="DentalCare+ Logo" 
+                className="h-10 bg-white rounded-full p-1"
+              />
+              <h3 className="text-xl font-bold">DentalCare+</h3>
+            </div>
             <p className="text-blue-100 mb-4">
               Providing exceptional dental care with compassion and expertise for over 15 years.
             </p>
