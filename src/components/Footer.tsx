@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 
@@ -10,7 +9,7 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <img 
-                src="/lovable-uploads/8cf8ad82-4f76-412f-944a-ae9a7a389a34.png" 
+                src="/lovable-uploads/b4975272-2fc3-479d-bb65-462c16f4c351.png" 
                 alt="DentalCare+ Logo" 
                 className="h-10 bg-white rounded-full p-1"
               />

@@ -44,7 +44,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <img 
-            src="/lovable-uploads/8cf8ad82-4f76-412f-944a-ae9a7a389a34.png" 
+            src="/lovable-uploads/b4975272-2fc3-479d-bb65-462c16f4c351.png" 
             alt="DentalCare+ Logo" 
             className="h-10 md:h-12"
           />
