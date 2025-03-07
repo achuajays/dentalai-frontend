@@ -54,7 +54,8 @@ const team = [
   {
     name: "Dr. Marcus Chen",
     role: "Orthodontist",
-    bio: "Dr. Chen is an expert in orthodontic treatments for patients of all ages. He's known for his gentle approach and excellent results with both traditional braces and clear aligners."
+    bio: "Dr. Chen is an expert in orthodontic treatments for patients of all ages. He's known for his gentle approach and excellent results with both traditional braces and clear aligners.",
+    image: "/lovable-uploads/a4e42654-723d-4407-89ff-96ca0a020219.png" 
   },
   {
     name: "Dr. Sophia Patel",
@@ -77,16 +78,19 @@ const team = [
   {
     name: "Michael Rodriguez",
     role: "Dental Assistant",
-    bio: "Michael assists our dentists with procedures and helps ensure patients understand their treatment plans. He's known for his calming presence."
+    bio: "Michael assists our dentists with procedures and helps ensure patients understand their treatment plans. He's known for his calming presence.",
+    image: "/lovable-uploads/1fec2a80-6991-46a1-92b3-b37ed64c8d27.png"
   },
   {
     name: "Dr. James Thompson",
     role: "Oral Surgeon",
-    bio: "Dr. Thompson specializes in complex extractions, implant placement, and other oral surgeries. He combines surgical skill with compassionate care."
+    bio: "Dr. Thompson specializes in complex extractions, implant placement, and other oral surgeries. He combines surgical skill with compassionate care.",
+    image: "/lovable-uploads/385425e8-b1ea-47c4-9e7b-051f5f9ceb9d.png"
   },
   {
     name: "Lisa Chang",
     role: "Patient Coordinator",
-    bio: "Lisa is often the first face you'll see at our office. She's dedicated to making sure every patient feels welcome and all questions are answered."
+    bio: "Lisa is often the first face you'll see at our office. She's dedicated to making sure every patient feels welcome and all questions are answered.",
+    image: "/lovable-uploads/ce713513-7196-4943-b356-aa18709699fc.png"
   }
 ];
