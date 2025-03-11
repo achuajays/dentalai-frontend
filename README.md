@@ -1,69 +1,117 @@
-# Welcome to your Lovable project
 
-## Project info
+# DentalCare+ Platform
 
-**URL**: https://lovable.dev/projects/decef0a7-e774-4e10-92e2-063220a86619
+![DentalCare+ Logo](/lovable-uploads/f19b7f71-9bc3-4e24-9348-44da580b63c7.png)
 
-## How can I edit this code?
+## Overview
 
-There are several ways of editing your application.
+DentalCare+ is a comprehensive digital platform designed to modernize dental healthcare through AI-powered tools and patient engagement solutions. Our platform bridges the gap between traditional dental care and cutting-edge technology to improve patient outcomes, streamline clinical workflows, and enhance the overall dental healthcare experience.
 
-**Use Lovable**
+## Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/decef0a7-e774-4e10-92e2-063220a86619) and start prompting.
+### 🧠 AI-Powered Tools
 
-Changes made via Lovable will be committed automatically to this repo.
+- **AI Treatment Planning**: Generate personalized treatment plans based on patient data and clinical guidelines.
+- **X-ray Analysis**: Automated detection and analysis of dental conditions from X-ray images.
+- **Medical Imaging**: Advanced imaging analysis and visualization tools.
+- **Medical Report Analysis**: AI-powered analysis of medical reports to extract key insights.
+- **AI Scribe**: Voice-to-text transcription for dental notes with automated structuring into SOAP format.
+- **Drug Information**: Comprehensive database of medications with AI-assisted search.
+- **Exercise Recommendations**: Personalized physical therapy and exercise recommendations.
 
-**Use your preferred IDE**
+### 👥 Patient Engagement
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Appointment Management**: Easy scheduling and management of dental appointments.
+- **Community Platforms**: Connect with AI dental assistants via Telegram and join our Discord community.
+- **Responsive Design**: Fully mobile-responsive interface for access on any device.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 🔄 Integration
 
-Follow these steps:
+- **API Documentation**: Comprehensive API documentation for integrating with existing systems.
+- **EMR Compatibility**: Seamless integration with Electronic Medical Record systems.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+## Getting Started
+
+### Prerequisites
+
+- Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+### Local Development
+
+```bash
+# Step 1: Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Step 2: Navigate to the project directory
+cd dental-care-plus
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Step 3: Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The application will be available at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Building for Production
 
-**Use GitHub Codespaces**
+```bash
+# Build the application
+npm run build
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Preview the production build locally
+npm run preview
+```
 
-## What technologies are used for this project?
+## Technology Stack
 
-This project is built with .
+- **Frontend**: React with TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Shadcn UI
+- **Build Tool**: Vite
+- **State Management**: React Context API + Hooks
+- **Charts & Visualizations**: Recharts
+- **PDF Generation**: jsPDF
+- **API Requests**: Fetch API
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Project Structure
 
-## How can I deploy this project?
+```
+src/
+├── components/     # Reusable UI components
+├── hooks/          # Custom React hooks
+├── pages/          # Page components
+├── services/       # API and service integrations
+├── types/          # TypeScript type definitions
+├── utils/          # Utility functions
+└── App.tsx         # Main application component
+```
 
-Simply open [Lovable](https://lovable.dev/projects/decef0a7-e774-4e10-92e2-063220a86619) and click on Share -> Publish.
+## Deployment
 
-## I want to use a custom domain - is that possible?
+You can deploy this application using:
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+1. **Lovable Hosting**: Open your [Lovable project](https://lovable.dev/projects/decef0a7-e774-4e10-92e2-063220a86619) and click on Share -> Publish.
+
+2. **Custom Hosting**: Export to GitHub and deploy on Netlify, Vercel, or any other static hosting service.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is proprietary and confidential. All rights reserved.
+
+## Contact
+
+For support or inquiries, please contact us through our [website](https://dentalcareplus.com/contact) or join our [Discord community](https://discord.gg/dentalcareplus).
+
+---
+
+Built with ❤️ by the DentalCare+ Team
