@@ -7,6 +7,7 @@ import { BackButton } from "@/components/BackButton";
 import { ExerciseSearch } from "@/components/exercise/ExerciseSearch";
 import { ExerciseResults } from "@/components/exercise/ExerciseResults";
 import { Exercise } from "@/types/Exercise";
+import { API_BASE_URL } from "@/config/constants";
 
 export default function AIExercise() {
   const [bodyPart, setBodyPart] = useState<string>("");
@@ -17,7 +18,7 @@ export default function AIExercise() {
     queryFn: async () => {
       if (!bodyPart) return null;
       const response = await fetch(
-        `https://dentalai-production.up.railway.app/exercises/bodypart/${bodyPart}?limit=10&offset=0`,
+        `${API_BASE_URL}/exercises/bodypart/${bodyPart}?limit=10&offset=0`,
         {
           headers: {
             accept: "application/json",

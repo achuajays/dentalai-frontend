@@ -1,9 +1,10 @@
 
 import { Appointment } from "@/types/Appointment";
+import { API_BASE_URL } from "@/config/constants";
 
 export const fetchAppointments = async (): Promise<Appointment[]> => {
   try {
-    const response = await fetch('https://dentalai-production.up.railway.app/data', {
+    const response = await fetch(`${API_BASE_URL}/data`, {
       headers: {
         'accept': 'application/json',
       },

@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "@/config/constants";
 
 interface LoginCredentials {
   email: string;
@@ -16,7 +17,7 @@ interface AuthResponse {
 
 export const authService = {
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    const response = await fetch('https://dentalai-production.up.railway.app/login', {
+    const response = await fetch(`${API_BASE_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -31,13 +32,12 @@ export const authService = {
     }
 
     const data = await response.json();
-    // Store user ID in localStorage for later use
     localStorage.setItem('userId', data.id.toString());
     return data;
   },
 
   async signup(credentials: SignupCredentials): Promise<AuthResponse> {
-    const response = await fetch('https://dentalai-production.up.railway.app/signup', {
+    const response = await fetch(`${API_BASE_URL}/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +52,6 @@ export const authService = {
     }
 
     const data = await response.json();
-    // Store user ID in localStorage for later use
     localStorage.setItem('userId', data.id.toString());
     return data;
   },
